@@ -1,0 +1,62 @@
+((* set cell_style = 'style_bw_python.tplx' *))
+((*- extends 'article.tplx' -*))
+
+((* block docclass *))
+    \documentclass[a4paper,11pt]{article}
+((* endblock docclass *))
+
+((* block packages *))
+    \usepackage{scrlfile}
+    \PreventPackageFromLoading{mathpazo}
+    ((( super() )))
+    \usepackage[T1]{fontenc}
+    \usepackage[
+      spanish,
+      es-tabla,
+      es-nodecimaldot
+    ]{babel}
+    \usepackage{graphicx}
+    \usepackage{geometry}
+    \usepackage{hyperref}
+    \usepackage{titling}
+((* endblock packages *))
+
+
+((* block author *))
+    \author{
+        Alejandro Del Hierro Diez \and 
+        Gabriel Rodriguez Canal \and
+        Miguel Martín Mateos \and 
+        Sergio García Prado
+    }
+((* endblock author *))
+
+((* block title *))
+    \title{Análisis de Series Temporales: Trabajo T1}
+((* endblock title *))
+
+((*- block any_cell -*))
+    ((* if not cell['metadata'].get('ignored', False) *))
+        ((( super() )))
+    ((* endif *))
+((*- endblock any_cell -*))
+
+
+((* block commands *))
+    \setlength{\droptitle}{-5em}
+    \hypersetup{hidelinks=true}
+    ((( super() )))
+    \newgeometry{margin={20mm, 22mm}}
+((* endblock commands *))
+
+((* block codecell *))
+    ((* block output_group *))
+        ((* if cell['outputs'] *))
+            \vspace{10pt}
+            \begin{center}
+            ((( super() )))
+            \end{center}
+            \vspace{10pt}
+        ((* endif *))
+    ((* endblock output_group *))
+((* endblock codecell *))
