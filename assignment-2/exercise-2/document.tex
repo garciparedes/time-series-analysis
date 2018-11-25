@@ -1,0 +1,59 @@
+% !TEX root = ./document.tex
+
+\documentclass[a4paper, spanish]{article}
+
+\usepackage{mystyle}
+\usepackage{myvars}
+
+\begin{document}
+
+  \maketitle
+
+  \section{Describir estas dos series ($\{Y_t\}$ puede crearse con el \texttt{PROC EXPAND} de \emph{SAS}, indicando claramente para cada una de ellas qué frecuencias elegiríais a priori para ajustar un modelo con tendencia polinómica más ondas.}
+  \label{sec:a}
+    \paragraph{}
+    [TODO]
+
+
+    \begin{figure}[h]
+      \centering
+      \inputminted{SAS}{./res/code/example.sas}
+      \caption{ejemplo sas}
+      \label{code:example}
+    \end{figure}
+
+
+  \section{Ajustar por suavizado exponencial, con el \texttt{PROC ESM}, los tres modelos que se consideren más apropiados para la serie $\{Y_t\}$ y comprobar su adecuación.}
+  \label{sec:b}
+    \paragraph{}
+    [TODO]
+
+
+  \section{Elegir el modelo que se considere más apropiado entre los tres del apartado \ref{sec:b} y con ese modelo dar las predicciones para las próximas $6$ observaciones. Justificar la elección del modelo.}
+  \label{sec:c}
+    \paragraph{}
+    [TODO]
+
+  \section{Utilizando en el ajuste solamente los datos hasta el final de $1990$ que no incluyan ningún caso de $1991$, calcular los errores de predicción para el año $1991$ y su correspondiente $SSE_p$ (suma de $s$ errores al cuadrado correspondientes a predicciones $\{1, 2, ..., s\}$ pasos hacia adelante) para los tres modelos del apartado \ref{sec:b}. Comentar si la elección hecha en el apartado \ref{sec:c} está de acuerdo con los resultados obtenidos en este caso al comparar la capacidad de predicción de los distintos modelos para el año $1991$. Adjuntad el programa con el lenguaje control que hayáis utilizado en este apartado.}
+  \label{sec:d}
+
+    \paragraph{}
+    [TODO]
+
+
+  \section{Obtener con el \texttt{PROC FORECAST} de \emph{SAS} el $SSE_p$ para el modelo de \emph{Winter Multiplicativo} con las mismas constantes de suavizado y los valores iniciales de los parámetros lo más próximos posible a los obtenidos en el apartado \ref{sec:d} con el \texttt{PROC ESM} para este modelo. Adjuntar el programa con el lenguaje control que hayáis utilizado para obtenerlo.}
+  \label{sec:e}
+
+    \paragraph{}
+    [TODO]
+
+
+  \section{Ajustar un modelo para la serie $\{ Xt \}$ con el módulo \texttt{Time Series Forecasting System} de
+\emph{SAS} razonando porqué se ha elegido. Utilizar el modelo elegido para predecir valores futuros de esta serie y establecer la comparación con los seis valores obtenidos en el apartado \ref{sec:c} junto con sus bandas de predicción.}
+  \label{sec:f}
+
+    \paragraph{}
+    [TODO]
+
+
+\end{document}
