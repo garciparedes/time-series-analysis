@@ -5,10 +5,13 @@
 \usepackage[margin={30mm, 22mm}]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{dirtytalk}
-\usepackage{titlesec}
 \usepackage{float}
 
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage[section]{placeins}
+
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
@@ -25,7 +28,7 @@
 \fancyhead[C]{ \today \ $\bullet$ \mysubject \ $\bullet$ \mytitle }
 \fancyfoot[C]{\thepage}
 
-
-\renewcommand\thesection{\alph{section})}
+\usepackage{titlesec}
+\renewcommand\thesection{(\alph{section})}
 \titleformat{\section}
 {\normalfont\bfseries}{\thesection}{1.0em}{}
