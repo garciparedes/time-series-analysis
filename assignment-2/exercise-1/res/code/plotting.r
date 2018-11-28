@@ -95,3 +95,19 @@ df.residuals <- data.frame(index = df$index, values = df.residuals.raw$ERROR[1:2
 PlotTimeSeries(df.residuals, seasonality = 12) %>%
   { save_plot(paste0(BASE_IMG_PATH, 'residuos.png'), .,
              base_aspect_ratio = 1.75, base_height = 8) }
+
+
+df.predicts <- data.frame(index = df$index, actual = df.residuals.raw$ACTUAL[1:204], predict = df.residuals.raw$PREDICT[1:204])
+
+
+p <- ggplot(df.predicts) +
+     aes(x = index) +
+     xlab("Fecha") +
+     ylab("Valor") +
+     geom_point(aes(y = actual)) +
+     geom_line(aes(y = predict, colour="Predicciones"))  +
+     theme(aspect.ratio=0.75, legend.position="none")
+
+
+save_plot(paste0(BASE_IMG_PATH, 'fitted.png'), plot_grid(p),
+          base_aspect_ratio = 1.75, base_height = 8)

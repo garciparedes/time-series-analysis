@@ -35,7 +35,7 @@
     En cuanto al diagrama de dispersión \emph{rango-media}, este ha sido generado realizando agrupaciones de longitud igual a la estacionalidad ($12$ meses). En este gráfico no parece que haya una relación fuerte entre dichas variables. Esto se intuye debido a la pendiente nula que se puede apreciar en el gráfico.
 
     \paragraph{}
-    En cuanto al correlograma, en este se aprecia la estructura de correlaciones que indica una componente de tendencia fuertemente marcada. Esta se aprecia en las correlaciones múltiplos de la estacionalidad. Es decir, aquellas correlaciones tales que $12 \ mod \ i = 0$. Si nos fijamos únicamente en estas, podemos apreciar un decricimiento marcademente lineal, lo cual nos confirma la existencia de una componente estacional.
+    En cuanto al correlograma, en este se aprecia la estructura de correlaciones que indica una componente de tendencia fuertemente marcada. Esta se aprecia en las correlaciones múltiplos de la estacionalidad. Es decir, aquellas correlaciones tales que $i \ mod \ 12 = 0$. Si nos fijamos únicamente en estas, podemos apreciar un decricimiento marcademente lineal, lo cual nos confirma la existencia de una componente estacional.
 
     \paragraph{}
     En cuanto al periodograma, se vuelve a confirmar la idea que acabamos de indicar en el anterior párrafo: La serie tiene una marcada estacionalidad de periodo 12. En este caso queda reflejado en la forma determinista en que las frecuencias de la forma $i/12$ con $i \in \{1, 2, ..., 6\}$ destacan sobre el resto, en especial las dos primeras.
@@ -65,7 +65,7 @@
 
     \begin{table}
       \centering
-      \begin{tabular}{l|c|c|c|c}%
+      \begin{tabular}{r|c|c|c|c}
           \bfseries Parámetro & Valor & Error & T & pvalor
           \csvreader[head to column names]{res/data/ondascompletasparams.csv}{}
           {\\\hline\PARM & \VALUE & \STDERR & \T & \P}
@@ -75,7 +75,7 @@
     \end{table}
 
     \paragraph{}
-    Por lo tanto se ha procedido al ajuste de dicho modelo, el cual se muestran en la tabla \ref{table:waves_complete_params}. Analizando los p-valores (referidos al test acerca de si pueden ser considerados nulos), podemos ver que $\gamma_{1, 2}$ y  $\gamma_{3,2}$ no rechazan dicha hipótesis. Si visualizamos el modelo, estos se refieren a $sin\left(\frac{2 \pi  }{12} t\right)$ y $sin\left(\frac{2 \pi 3}{12} t\right)$ respectivamente. Por lo tanto, vamos a realizar un nuevo ajuste sobre el modelo sin dichos regresores:
+    Por lo tanto se ha procedido al ajuste de dicho modelo, el cual se muestran en la tabla \ref{table:waves_complete_params}. Analizando los p-valores (referidos al test acerca de si pueden ser considerados nulos), podemos ver que $\gamma_{1, 2}$ y  $\gamma_{3,2}$ no rechazan dicha hipótesis. Estos parámetros se refieren a los regresores $sin\left(\frac{2 \pi  }{12} t\right)$ y $sin\left(\frac{2 \pi 3}{12} t\right)$ respectivamente. Por lo tanto, vamos a realizar un nuevo ajuste sobre el modelo sin ellos. Para el ajuste de este modelo es necesario estimar $12$ parámetros, esto es dos menos que en el modelo anterior. Entonces, el modelo compuesto únicamente con aquellas ondas significativamente distintas de cero se define a continuación:
 
     \begin{align*}
       E[X_{n + k}] = \beta_0 &+ \beta_1 \cdot (n + k) + \beta_2 \cdot(n + k) \\
@@ -88,14 +88,21 @@
     \end{align*}
 
     \paragraph{}
-    [TODO Añadir gráfico de la serie ajustada?]
+    En la figura \ref{fig:fitted} se muestra el gráfico de la serie de predicciones sobre el diagrama de puntos que representan las observaciones de la serie original. Tal y como se puede apreciar, este recoge gran parte de la variabilidad de la serie.
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=.75\linewidth]{fitted}
+      \caption{Gráfico de la serie ajustada por el modelo basado en tendencia cuadrática y ondas significativas.}
+      \label{fig:fitted}
+    \end{figure}
 
     \paragraph{}
     En este caso, los parámetros ajustados se muestran en la tabla \ref{table:waves_params}. Tal y como podemos apreciar en este caso todos los pvalores indican que los parámetros son significativamente distintos de cero (tomando un nivel de confianza del $90\%$). Entonces, procederemos al análisis de la serie de residuales obtenidos para tratar de confirmar el ajuste del modelo. Para ello debemos confirmar que esta serie se refiere a un ruido blanco (no existe correlacion entre las distintas observaciones, su media es cero y su varianza constante).
 
     \begin{table}
       \centering
-      \begin{tabular}{l|c|c|c|c}%
+      \begin{tabular}{r|c|c|c|c}
           \bfseries Parámetro & Valor & Error & T & pvalor
           \csvreader[head to column names]{res/data/ondassignificativasparams.csv}{}
           {\\\hline\PARM & \VALUE & \STDERR & \T & \P}
@@ -106,6 +113,7 @@
 
 
     \begin{figure}
+      \centering
       \includegraphics[width=\linewidth]{residuos}
       \caption{Gráfico de la serie, Diagrama de Dispersión, Correlograma y Periodograma de la serie de residuales tras el ajuste del modelo}
       \label{fig:residuals}
@@ -127,22 +135,32 @@
   \section{Ajustar por mínimos cuadrados un modelo con tendencia más índices estacionales a la serie y comentar diferencias con el ajuste anterior.}
 
     \paragraph{}
-    [TODO]
+    En este apartado se pide ajustar el mismo modelo mediante una modelización basada en \emph{índices estacionales}. Esto es a partir de variables \emph{dummy} tales que toman el valor $1$ cuando la observación en cuestión se refiere al periodo estacional de la variable y $0$ en caso contrario. A continuación se define más matemáticamente:
 
+    \begin{equation*}
+      S_i =
+      \begin{cases}
+        1 & t \ mod \ i = 1 \\
+        0 & \text{en otro caso}
+     \end{cases}
+    \end{equation*}
+
+    \paragraph{}
+    A pesar de que esta modelización es equivalente en cuanto a la cantidad de variabilidad recogida por el modelo y las predicciones que realiza, no lo es desde el punto de vista de los valores de los parámetros (por ser una parametrización diferente). A continuación se muestra el modelo con tendencia cuadrática y representación de la estacionalidad mediante índices:
 
     \begin{align*}
       E[X_{n + k}] = \beta_0 &+ \beta_1 \cdot (n + k) + \beta_2 \cdot(n + k) \\
-      &+ \gamma_{1} S_{1} + \gamma_{2} S_{2}  + \gamma_{3} S_{3} + \gamma_{4} S_{4} \\
-      &+ \gamma_{5} S_{5} + \gamma_{6} S_{6}  + \gamma_{7} S_{7} + \gamma_{8} S_{8} \\
+      &+ \gamma_{1} S_{1} + \gamma_{2} S_{2} + \gamma_{3} S_{3} + \gamma_{4} S_{4} \\
+      &+ \gamma_{5} S_{5} + \gamma_{6} S_{6} + \gamma_{7} S_{7} + \gamma_{8} S_{8} \\
       &+ \gamma_{9} S_{9} + \gamma_{10} S_{10}  + \gamma_{11} S_{11}
     \end{align*}
 
     \paragraph{}
-    [TODO]
+    Nótese que se ha eliminado el índicador referido al último índice. Esto se ha hecho dado que la parte del modelo que recoge la tendencia también tiene término independiente, lo cual produce una sobre parametrización y genera problemas de \emph{identificabilidad} entre los regresores. Este término se refiere a que ninguno de estos se pueda escribir como una combinación lineal del resto, lo cual significaría que sobra uno de ellos. Para solucionar esto existen distintas alternativas, sin embargo la herramienta utilizada (\texttt{SAS}) opta por eliminar el último regresor del modelo. Entonces, para el ajuste de este modelo necesitamos estimar el valor de $14$ parámetros, al igual que el modelo de ondas completas.
 
     \begin{table}
       \centering
-      \begin{tabular}{l|c|c|c|c}%
+      \begin{tabular}{r|c|c|c|c}
           \bfseries Parámetro & Valor & Error & T & pvalor
           \csvreader[head to column names]{res/data/indicesparams.csv}{}
           {\\\hline\PARM & \VALUE & \STDERR & \T & \P}
@@ -152,6 +170,9 @@
     \end{table}
 
     \paragraph{}
-    [TODO]
+    En la tabla \ref{table:indices_params} se muestran los parámetros ajustados del modelo. En este caso hay varios que pueden ser considerados distintos de $0$ (al igual que ocurría para el caso del modelo de ondas completas). Sin embargo, dado que ya se ha hecho en el anterior modelo, por cuestiones de simplicidad no se va a estudiar el modelo compuesto únicamente por los índices estacionales significativos.
+
+    \paragraph{}
+    Para comprobar la equivalencia entre el modelo de índices estacionales y el de ondas (incluyendo todos los ármonicos), se puede estudiar la varianza del modelo $\widehat{\sigma^2}$, la cual es coincide en ambos (se puede apreciar en las tablas \ref{table:waves_complete_params} y \ref{table:indices_params}). Esto es porque recogen la misma cantidad de variabilidad.
 
 \end{document}
