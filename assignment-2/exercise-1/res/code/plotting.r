@@ -76,10 +76,7 @@ BASE_DATA_PATH <- paste0(BASE_PATH, 'res/data/')
 
 df <- read.csv(paste0(BASE_DATA_PATH, 'espectadores.csv'))
 
-################
-# TODO #IMPORTANT Corregir las fechas para no tener que sumar dos años.
-################
-df$DATE <- dmy(df$DATE) + years(2)
+df$DATE <- dmy(df$DATE)
 
 colnames(df) <- c("index", "values")
 
@@ -88,16 +85,19 @@ PlotTimeSeries(df, seasonality = 12, armonics = (1:6) / 12) %>%
              base_aspect_ratio = 1.75, base_height = 8) }
 
 
-df.residuals.raw <- read.csv(paste0(BASE_DATA_PATH, 'ondassignificativaspredic.csv'))
+df.residuals.raw <- read.csv(paste0(BASE_DATA_PATH, 'ondassignificativaspredict.csv'))[1:204,]
+df.residuals.raw$DATE <- dmy(df.residuals.raw$DATE)
 
-df.residuals <- data.frame(index = df$index, values = df.residuals.raw$ERROR[1:204])
+df.residuals <- data.frame(index = df.residuals.raw$DATE,
+                           values = df.residuals.raw$ERROR)
 
 PlotTimeSeries(df.residuals, seasonality = 12) %>%
   { save_plot(paste0(BASE_IMG_PATH, 'residuos.png'), .,
              base_aspect_ratio = 1.75, base_height = 8) }
 
-
-df.predicts <- data.frame(index = df$index, actual = df.residuals.raw$ACTUAL[1:204], predict = df.residuals.raw$PREDICT[1:204])
+df.predicts <- data.frame(index = df.residuals.raw$DATE,
+                          actual = df.residuals.raw$ACTUAL,
+                          predict = df.residuals.raw$PREDICT)
 
 
 p <- ggplot(df.predicts) +

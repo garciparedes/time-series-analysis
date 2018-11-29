@@ -14,8 +14,6 @@
     \item \textbf{Serie}: Número de espectadores de cine por meses desde Enero de 1984 a Diciembre de 2000.
   \end{itemize}
 
-  \section{Ajustar por mínimos cuadrados un modelo con tendencia más ondas a la serie escribiendo explícitamente las ecuaciones de las ondas incluidas en el modelo. Añadir la descripción completa de la serie residual.}
-
     \paragraph{}
     Tal y como se indica al comienzo del documento, en este trabajo se va a tratar de ajustar una serie referida al número de espectadores de cine por meses dese Enero del año $1984$ hasta Diciembre del año $2000$. Esto se corresponde con un total de $204$ observaciones mensuales. La serie completa recoge información de $204 / 12 = 17$ años acerca del número de espectadores.
 
@@ -39,6 +37,8 @@
 
     \paragraph{}
     En cuanto al periodograma, se vuelve a confirmar la idea que acabamos de indicar en el anterior párrafo: La serie tiene una marcada estacionalidad de periodo 12. En este caso queda reflejado en la forma determinista en que las frecuencias de la forma $i/12$ con $i \in \{1, 2, ..., 6\}$ destacan sobre el resto, en especial las dos primeras.
+
+  \section{Ajustar por mínimos cuadrados un modelo con tendencia más ondas a la serie escribiendo explícitamente las ecuaciones de las ondas incluidas en el modelo. Añadir la descripción completa de la serie residual.}
 
     \paragraph{}
     Una vez descrita la serie, estamos en condiciones suficientes para realizar un ajuste sobre la serie. En este caso la modelización de la tendencia se realizará basandose en un modelo con tendencia (cuadrática) + ondas. Esto lo haremos en dos fases, inicialmente ajustaremos un modelos con todas las ondas posibles, cuyo resultado deberá ser totalmente equivalente al modelo basado en índices que se ajusta en el segundo apartado. Posteriormente, para reducir la complejidad del modelo, eliminaremos aquellas componentes de la onda que no resulten significativos para explicar el modelo.

@@ -1,5 +1,5 @@
-data trabajo1.espectadoresondas;
-	set trabajo1.espectadores;
+data ej1.ondas;
+	set ej1.espectadores;
 
 	t = _n_;
 
