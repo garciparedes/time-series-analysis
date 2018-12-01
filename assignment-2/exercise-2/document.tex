@@ -22,7 +22,7 @@
   \label{sec:a}
 
 
-    \begin{figure}
+    \begin{figure}[h]
       \centering
       \includegraphics[width=.75\linewidth]{semanal}
       \caption{[TODO]}
@@ -33,7 +33,7 @@
     [TODO]
 
 
-    \begin{figure}
+    \begin{figure}[h]
       \centering
       \includegraphics[width=.75\linewidth]{semanal-diff}
       \caption{[TODO]}
@@ -44,7 +44,7 @@
     [TODO]
 
 
-    \begin{figure}
+    \begin{figure}[h]
       \centering
       \includegraphics[width=.75\linewidth]{semanal4}
       \caption{[TODO]}
@@ -55,7 +55,7 @@
     [TODO]
 
 
-    \begin{figure}
+    \begin{figure}[h]
       \centering
       \includegraphics[width=.75\linewidth]{semanal4-diff}
       \caption{[TODO]}
@@ -107,6 +107,145 @@
 
   \section{Ajustar por suavizado exponencial, con el \texttt{proc esm}, los tres modelos que se consideren más apropiados para la serie $\{Y_t\}$ y comprobar su adecuación.}
   \label{sec:b}
+
+    \paragraph{}
+    Tras realizar un exhaustivo análisis de todas las diferentes posibilidades de ajuste por suavizado exponencial elegimos el \textit{seasonal exponential smoothing}, el \textit{suavizado de Winters multiplicativo} y el \textit{aditivo}, ya que son los tres que incorporarán la estacionalidad de la serie.\\
+
+    \subsection{Seasonal Exponential Smoothing}
+
+      \paragraph{}
+      Para comenzar explicaremos el modelo SES en el que mediante la tabla de los estimadores del parámetro y la significancia de dicho test.
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{PvalorSeasonal}
+        \caption{Tabla de significancia. Seasonal}
+        \label{}
+      \end{figure}
+
+      \paragraph{}
+      Observamos que para la constante de suavizado estacional no se rechaza su significancia a cualquier nivel ya que el pvalor es 0.99.
+
+      \paragraph{}
+      En cambio, si se rechazará para la constante de suavizado para la media, donde el pvalor es $<0.001$. Será conveniente diferenciar ya que el estimador estacional es cercano a 0. A continuación adjuntamos el gráfico del ACF de residuales:
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{ErrorACFPlot_SEASONAL}
+        \caption{Gráfica ACF Seasonal}
+        \label{}
+      \end{figure}
+
+      \paragraph{}
+      Observamos como dicho modelo ofrece dudas sobre su validación ya que para el retardo 2 la autocorrelación es muy alta. El retardo 1 no es muy alto, no resultará perjudicial para el modelo. Los retardos estacionales(cada 13) no son notables por lo que es bueno para la validación.
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{ErrorWhiteNoiseLogProbPlot_SEASONAL}
+        \caption{Probabilidad ruido blanco. Seasonal}
+        \label{}
+      \end{figure}
+
+      \paragraph{}
+      Vemos en la gráfica que el test de que las correlaciones sean cero se rechaza para los 4 primeros retardos a nivel 0.05. Esto es indeseable para validar el modelo puesto que no podemos asegurar que sea ruido blanco, que es lo que se busca.
+
+      \paragraph{}
+      A continuación, pasamos a realizar el ajuste del modelo aditivo de Winter.
+
+    \subsection{Modelo aditivo de Winter}
+
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{TablaADD}
+        \caption{Tabla significancia. Aditivo}
+        \label{}
+      \end{figure}
+
+      Observando la tabla, vemos que que tanto para la constante de suavizado para la tendencia como para la estacionalidad no son significativos, es decir, no se rechaza el test $\alpha_2$ y $\alpha_3$ igual a 0. Como el estimador $\alpha_2$ de es cercano a 0 y al existir estacionalidad significará que es conveniente diferenciar. Para $\alpha_3$ será que son indices estacionales deterministas.
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{ACF_ADD}
+        \caption{Plot ACF Aditivo. Aditivo}
+        \label{}
+      \end{figure}
+
+      \paragraph{}
+      Siguiendo la línea de lo comentado para el ACF del seasonal, vemos que para el retardo 2 de nuevo vuelve a ser una autocorrelación muy alta que indicará que solo se validará si no encontramos uno mejor. Para las autocorrelaciones para los periodos estacionales no se observa valores altos.
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{WN_ADD}
+        \caption{Plot WN Aditivo. Aditivo}
+        \label{}
+      \end{figure}
+
+      \paragraph{}
+      Siguiendo el análisis de este modelo para determinar si es un modelo con ruido blanco o no, vemos en dicha gráfica que de nuevo se rechaza para los primeros retardos y por tanto no será ruido blanco, algo indeseable para validar el modelo.
+
+      \paragraph{}
+      Por último analizaremos el modelo Winter multiplicativo.
+
+    \subsection{Modelo multiplicativo de Winter}
+
+      \paragraph{}
+      Para comenzar se adjunta la tabla de significancia:
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{TablaMUL}
+        \caption{Tabla Significancia. Multiplicativo}
+        \label{}
+      \end{figure}
+
+      \paragraph{}
+      Observamos en la tabla anterior , que en este caso si se rechaza para la constante de suavizado estacional con un pvalor$ <0.001$ y para el nivel. Sin embargo, para la constantes de suavizado para la tendencia , no se rechaza la hipótesis de $\alpha_2 =0$, por lo que concluimos no será adecuado suavizar dicha componente. Vemos que su estimador es próximo a cero, por lo que será conveniente diferenciar o utilizar modelos ARIMA.
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{ACF_MUL}
+        \caption{Tabla PLOT ACF. Multiplicativo}
+        \label{}
+      \end{figure}
+
+      \paragraph{}
+      En el gráfico adjunto anteriormente, vemos como los primeros retardos son ligeramente menores a los de los otros modelos, donde en ningún caso sobrepasan las bandas. Los retardos para los periodos no son muy altos, quizás solo la autocorrelación 18 pero no es tan influyente en el ajuste.
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{WN_MUL}
+        \caption{WN.Mul}
+        \label{}
+      \end{figure}
+
+      \paragraph{}
+      Para finalizar, vemos el gráfico WN para contrastar si los residuales del modelo son ruido blanco. En este caso, diferenciandose ligeramente con los modelos anteriores, vemos que para $\alpha$ del 0.01 no se rechaza ninguno y solo 3 para $\alpha$ 0.05.
+
+      \paragraph{}
+      Por último compararemos SSE de cada modelo a modo de información adicional:
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{SSE_SEASONAL}
+        \caption{Tabla SSE.Seasonal}
+        \label{}
+      \end{figure}
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{SSE_ADD}
+        \caption{Tabla SSE.ADD}
+        \label{}
+      \end{figure}
+
+      \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.75\textwidth]{SSE_MUL}
+        \caption{Tabla SSE.MUL}
+        \label{}
+      \end{figure}
+
 
     \paragraph{}
     [TODO]

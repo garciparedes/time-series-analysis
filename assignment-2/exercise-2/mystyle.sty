@@ -31,6 +31,10 @@
 \fancyfoot[C]{\thepage}
 
 
-\renewcommand\thesection{\alph{section})}
+\renewcommand\thesection{(\alph{section})}
 \titleformat{\section}
 {\normalfont\bfseries}{\thesection}{1.0em}{}
+
+\renewcommand\thesubsection{(\alph{section}.\arabic{subsection})}
+\titleformat{\subsection}
+{\normalfont\bfseries}{\thesubsection}{1.0em}{}
