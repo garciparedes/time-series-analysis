@@ -88,11 +88,11 @@
     \end{align*}
 
     \paragraph{}
-    En la figura \ref{fig:fitted} se muestra el gráfico de la serie de predicciones sobre el diagrama de puntos que representan las observaciones de la serie original. Tal y como se puede apreciar, este recoge gran parte de la variabilidad de la serie.
+    En la figura \ref{fig:fitted} se muestra el gráfico de la serie de predicciones (en color rojo) junto con la serie original (en color gris). Tal y como se puede apreciar, esta se ajusta a los datos. Este ajuste no es perfecto debido a la forma determinista del modelo, que no actualiza las componentes estacionales a lo largo del tiempo. Posteriormente se estudiarán en detalle los residuos para comprobar si la adecuación del modelo que se intuye en la figura \ref{fig:fitted} es razonable.
 
     \begin{figure}
       \centering
-      \includegraphics[width=.75\linewidth]{fitted}
+      \includegraphics[width=\linewidth]{fitted}
       \caption{Gráfico de la serie ajustada por el modelo basado en tendencia cuadrática y ondas significativas.}
       \label{fig:fitted}
     \end{figure}
@@ -111,14 +111,12 @@
       \label{table:waves_params}
     \end{table}
 
-
     \begin{figure}
       \centering
       \includegraphics[width=\linewidth]{residuos}
       \caption{Gráfico de la serie, Diagrama de Dispersión, Correlograma y Periodograma de la serie de residuales tras el ajuste del modelo}
       \label{fig:residuals}
     \end{figure}
-
 
     \paragraph{}
     Al igual que se ha indicado anteriormente para el caso de la serie original, en este caso se incluyen un conjunto de diagramas sobre la serie de residuales, la cual se muestra en la figura \ref{fig:residuals}. Al observar el gráfico de la serie vemos que este no tiene tendencia, así como que su media está centrada en el origen. Esto nos hace pensar en ruido blanco, sin embargo debemos fijarnos en el resto de gráficos para confirmar la incorrelacción de variables y la varianza constante.
@@ -127,7 +125,7 @@
     A partir del diagrama de dispersión \emph{rango-media} podemos comprobar que la variación del modelo no está relacionada con la media de este, por lo que podemos confirmar que la varianza se mantiene constante entre toda la serie de residuales. En cuanto a la correlación entre los residuales, tras analizar el correlograma y el periodograma se puede confirmar que no existe ninguna estructura bien definida sobre estos. En el caso del correlograma, la mayoría se encuentran bajo las bandas de confianza, sin representar una estructura claramente marcada.
 
     \paragraph{}
-    [TODO pensar qué decir sobre el periodograma.]
+    Si visualizamos el periodograma vemos que no existe ninún conjunto de armónicos que destaque claramente sobre el resto. Gran parte de estos se encuentran distribucidos de manera uniforme a lo largo del soporte de la frecuencia. Esto es otro motivo por el cual asumimos que la serie está bien ajustada y los residuos componen una serie de ruido blanco. A pesar de que existe una leve estructura de correlaciones que refleja estacionalidad, esta se encuentra en todos los casos muy por debajo de las bandas de confianza del $95\%$, por lo que ignoraremos dicha estructura por ser demasiado sutíl.
 
     \paragraph{}
     Tras el análisis acerca de la serie de residuales del modelo ajustado, podemos asumir que esta se refiere a un ruido blanco, por lo que diremos que el modelo basado en un polinomio cuadrático para modelizar la tendencia  y las ondas significativas para la modelización de la estacionalidad de periodo $12$, ajusta adecuadamente a la serie del número de Espectadores de cine Mensuales entre Enero de 1984 y Diembre de 2000.

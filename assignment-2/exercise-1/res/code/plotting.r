@@ -99,15 +99,13 @@ df.predicts <- data.frame(index = df.residuals.raw$DATE,
                           actual = df.residuals.raw$ACTUAL,
                           predict = df.residuals.raw$PREDICT)
 
-
 p <- ggplot(df.predicts) +
      aes(x = index) +
      xlab("Fecha") +
      ylab("Valor") +
-     geom_point(aes(y = actual)) +
+     geom_line(aes(y = actual, alpha = 0.7)) +
      geom_line(aes(y = predict, colour="Predicciones"))  +
-     theme(aspect.ratio=0.75, legend.position="none")
-
+     theme(aspect.ratio=1 / 3, legend.position="none")
 
 save_plot(paste0(BASE_IMG_PATH, 'fitted.png'), plot_grid(p),
-          base_aspect_ratio = 1.75, base_height = 8)
+          base_aspect_ratio = 3, base_height = 3)
