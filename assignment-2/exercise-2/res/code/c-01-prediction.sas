@@ -1,5 +1,4 @@
-/* TODO: Realizar predicciones de 6 observaciones siguientes. */
-proc esm data=<input-data-set> out=<output-data-set>;
-  id <time-ID-variable> interval=<frequency>;
-  forecast <time-series-variables>;
+proc esm data = EJ2.SEMANAL4 outfor = PREDICT lead = 6;
+	id DATE interval = WEEK4.6;
+	forecast TURBERSEM / model = WINTERS;
 run;
