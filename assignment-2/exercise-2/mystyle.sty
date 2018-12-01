@@ -5,16 +5,18 @@
 \usepackage[margin={30mm, 22mm}]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{dirtytalk}
+\usepackage{titlesec}
 \usepackage{float}
 
-\usepackage{amsmath}
-\usepackage{amssymb}
-
-\usepackage[section]{placeins}
-
+\usepackage{amsmath,amssymb}
 
 \usepackage{graphicx}
-\graphicspath{ {images/} }
+\graphicspath{ {res/img/} }
+\usepackage[section]{placeins}
+
+\usepackage{csvsimple}
+
+\renewcommand{\arraystretch}{1.1}
 
 \usepackage[hidelinks]{hyperref}
 
@@ -28,7 +30,7 @@
 \fancyhead[C]{ \today \ $\bullet$ \mysubject \ $\bullet$ \mytitle }
 \fancyfoot[C]{\thepage}
 
-\usepackage{titlesec}
-\renewcommand\thesection{(\alph{section})}
+
+\renewcommand\thesection{\alph{section})}
 \titleformat{\section}
 {\normalfont\bfseries}{\thesection}{1.0em}{}

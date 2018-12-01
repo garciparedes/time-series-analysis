@@ -1,6 +1,4 @@
-/* TODO: Crear serie Y_t. */
-proc expand data=monthly out=annual from=month to=year;
-  convert x y z / method=aggregate;
-  convert a b c / method=aggregate observed=total;
+proc expand data=ej2.semanal out=ej2.semanal4 from=week.6 to=week4.6 ;
   id date;
+  convert tubersem/ observed=total;
 run;
