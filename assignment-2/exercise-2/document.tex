@@ -114,6 +114,19 @@
     \subsection{Seasonal Exponential Smoothing}
 
       \paragraph{}
+      [TODO]
+
+      \begin{figure}[h]
+        \centering
+        \inputminted{SAS}{./res/code/b-01-esm-1.sas}
+        \caption{[TODO]}
+        \label{code:b_esm_1}
+      \end{figure}
+
+      \paragraph{}
+      [TODO]
+
+      \paragraph{}
       Para comenzar explicaremos el modelo SES en el que mediante la tabla de los estimadores del parámetro y la significancia de dicho test.
 
       \begin{figure}[h]
@@ -154,6 +167,18 @@
 
     \subsection{Modelo aditivo de Winter}
 
+      \paragraph{}
+      [TODO]
+
+      \begin{figure}[h]
+        \centering
+        \inputminted{SAS}{./res/code/b-01-esm-2.sas}
+        \caption{[TODO]}
+        \label{code:b_esm_2}
+      \end{figure}
+
+      \paragraph{}
+      [TODO]
 
       \begin{figure}[h]
         \centering
@@ -188,6 +213,19 @@
       Por último analizaremos el modelo Winter multiplicativo.
 
     \subsection{Modelo multiplicativo de Winter}
+
+      \paragraph{}
+      [TODO]
+
+      \begin{figure}[h]
+        \centering
+        \inputminted{SAS}{./res/code/b-01-esm-3.sas}
+        \caption{[TODO]}
+        \label{code:b_esm_3}
+      \end{figure}
+
+      \paragraph{}
+      [TODO]
 
       \paragraph{}
       Para comenzar se adjunta la tabla de significancia:
@@ -246,40 +284,8 @@
         \label{}
       \end{figure}
 
-
     \paragraph{}
-    [TODO]
-
-    \begin{figure}[h]
-      \centering
-      \inputminted{SAS}{./res/code/b-01-esm-1.sas}
-      \caption{[TODO]}
-      \label{code:b_esm_1}
-    \end{figure}
-
-    \paragraph{}
-    [TODO]
-
-    \begin{figure}[h]
-      \centering
-      \inputminted{SAS}{./res/code/b-01-esm-2.sas}
-      \caption{[TODO]}
-      \label{code:b_esm_2}
-    \end{figure}
-
-    \paragraph{}
-    [TODO]
-
-    \begin{figure}[h]
-      \centering
-      \inputminted{SAS}{./res/code/b-01-esm-3.sas}
-      \caption{[TODO]}
-      \label{code:b_esm_3}
-    \end{figure}
-
-    \paragraph{}
-    [TODO]
-
+    [TODO ]
 
   \section{Elegir el modelo que se considere más apropiado entre los tres del apartado \ref{sec:b} y con ese modelo dar las predicciones para las próximas $6$ observaciones. Justificar la elección del modelo.}
   \label{sec:c}
@@ -292,6 +298,29 @@
       \inputminted{SAS}{./res/code/c-01-prediction.sas}
       \caption{[TODO]}
       \label{code:c_prediction}
+    \end{figure}
+
+    \paragraph{}
+    [TODO]
+
+    \paragraph{}
+    Tras realizar un exhaustivo análisis en el apartado b, de los 3 modelos de suavizado exponencial, hemos considerado que el mejor modelo es el multiplicativo de Winter.
+    Esta eleccion la hemos concluido por los motivos mencionados anteriormente :
+
+    \begin{itemize}
+      \item Pvalores de la Figura 7( Constante de Suavizado Estacional Significativa)
+      \item Gráfica ACF de la Figura 8 (Autocorrelaciones menores que otro modelos)
+      \item Grafica WN de la Figura 9( Retardos con menor probabilidad menor de ser ruido blanco)
+    \end{itemize}
+
+    \paragraph{}
+    Por último, obtenemos las predicciones para las seis siguientes observaciones.
+
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.75\textwidth]{PredC}
+      \caption{Tabla Predicciones.Modelo Multiplicativo}
+      \label{}
     \end{figure}
 
     \paragraph{}
