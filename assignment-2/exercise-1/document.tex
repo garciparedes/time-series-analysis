@@ -17,7 +17,7 @@
     \paragraph{}
     Tal y como se indica al comienzo del documento, en este trabajo se va a tratar de ajustar una serie referida al número de espectadores de cine por meses dese Enero del año $1984$ hasta Diciembre del año $2000$. Esto se corresponde con un total de $204$ observaciones mensuales. La serie completa recoge información de $204 / 12 = 17$ años acerca del número de espectadores.
 
-    \begin{figure}[h]
+    \begin{figure}[htb!]
       \includegraphics[width=\linewidth]{espectadores}
       \caption{Gráfico de la serie, Diagrama de Dispersión, Correlograma y Periodograma de la serie \emph{Espectadores}.}
       \label{fig:espectadores}
@@ -63,12 +63,14 @@
     \end{align*}
 
 
-    \begin{table}
+    \begin{table}[htb!]
       \centering
-      \begin{tabular}{r|c|c|c|c}
-          \bfseries Parámetro & Valor & Error & T & pvalor
+      \begin{tabular}{|r|c|c|c|c|}
+          \hline
+          & Valor & Error & T & pvalor
           \csvreader[head to column names]{res/data/ondascompletasparams.csv}{}
           {\\\hline\PARM & \VALUE & \STDERR & \T & \P}
+          \\\hline
       \end{tabular}
       \caption{Parámetros ajustados para el modelo basado en ondas con todos los armónicos.}
       \label{table:waves_complete_params}
@@ -90,7 +92,7 @@
     \paragraph{}
     En la figura \ref{fig:fitted} se muestra el gráfico de la serie de predicciones (en color rojo) junto con la serie original (en color gris). Tal y como se puede apreciar, esta se ajusta a los datos. Este ajuste no es perfecto debido a la forma determinista del modelo, que no actualiza las componentes estacionales a lo largo del tiempo. Posteriormente se estudiarán en detalle los residuos para comprobar si la adecuación del modelo que se intuye en la figura \ref{fig:fitted} es razonable.
 
-    \begin{figure}[h]
+    \begin{figure}[htb!]
       \centering
       \includegraphics[width=\linewidth]{fitted}
       \caption{Gráfico de la serie ajustada por el modelo basado en tendencia cuadrática y ondas significativas.}
@@ -100,18 +102,20 @@
     \paragraph{}
     En este caso, los parámetros ajustados se muestran en la tabla \ref{table:waves_params}. Tal y como podemos apreciar en este caso todos los pvalores indican que los parámetros son significativamente distintos de cero (tomando un nivel de confianza del $90\%$). Entonces, procederemos al análisis de la serie de residuales obtenidos para tratar de confirmar el ajuste del modelo. Para ello debemos confirmar que esta serie se refiere a un ruido blanco (no existe correlacion entre las distintas observaciones, su media es cero y su varianza constante).
 
-    \begin{table}
+    \begin{table}[htb!]
       \centering
-      \begin{tabular}{r|c|c|c|c}
-          \bfseries Parámetro & Valor & Error & T & pvalor
+      \begin{tabular}{|r|c|c|c|c|}
+          \hline
+          & Valor & Error & T & pvalor
           \csvreader[head to column names]{res/data/ondassignificativasparams.csv}{}
           {\\\hline\PARM & \VALUE & \STDERR & \T & \P}
+          \\\hline
       \end{tabular}
       \caption{Parámetros ajustados para el modelo basado en ondas con armónicos significativos.}
       \label{table:waves_params}
     \end{table}
 
-    \begin{figure}[h]
+    \begin{figure}[htb!]
       \centering
       \includegraphics[width=\linewidth]{residuos}
       \caption{Gráfico de la serie, Diagrama de Dispersión, Correlograma y Periodograma de la serie de residuales tras el ajuste del modelo}
@@ -156,12 +160,14 @@
     \paragraph{}
     Nótese que se ha eliminado el índicador referido al último índice. Esto se ha hecho dado que la parte del modelo que recoge la tendencia también tiene término independiente, lo cual produce una sobre parametrización y genera problemas de \emph{identificabilidad} entre los regresores. Este término se refiere a que ninguno de estos se pueda escribir como una combinación lineal del resto, lo cual significaría que sobra uno de ellos. Para solucionar esto existen distintas alternativas, sin embargo la herramienta utilizada (\texttt{SAS}) opta por eliminar el último regresor del modelo. Entonces, para el ajuste de este modelo necesitamos estimar el valor de $14$ parámetros, al igual que el modelo de ondas completas.
 
-    \begin{table}
+    \begin{table}[htb!]
       \centering
-      \begin{tabular}{r|c|c|c|c}
-          \bfseries Parámetro & Valor & Error & T & pvalor
+      \begin{tabular}{|r|c|c|c|c|}
+          \hline
+           & Valor & Error & T & pvalor
           \csvreader[head to column names]{res/data/indicesparams.csv}{}
           {\\\hline\PARM & \VALUE & \STDERR & \T & \P}
+          \\\hline
       \end{tabular}
       \caption{Parámetros ajustados para el modelo basado en índices.}
       \label{table:indices_params}
