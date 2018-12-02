@@ -24,7 +24,7 @@
     \end{figure}
 
     \paragraph{}
-    El primer paso antes de realizar ningún ajuste sobre la serie es conocer la estructura de la misma, lo cual permitirá entender mejor su comportamiento facilitando la realización de una modelización más coherente. Por tanto, en la figura \ref{fig:espectadores} se muestra el gráfico de la serie, el gráfico de dispersión \emph{rango-media}, el correlograma y el periodograma de la misma respectivamente.
+    El primer paso antes de realizar ningún ajuste sobre la serie es conocer la estructura de la misma, lo cual permitirá entender mejor su comportamiento facilitando la realización de una modelización más coherente. Por tanto, en la \autoref{fig:espectadores} se muestra el gráfico de la serie, el gráfico de dispersión \emph{rango-media}, el correlograma y el periodograma de la misma respectivamente.
 
     \paragraph{}
     Lo más notable en la estructura de la serie es su marcada tendencia parabólica, con su mínimo en torno a los años \emph{1990}. Esto nos será de gran ayuda para modelizar la serie, utilizando una modelización cuadrática para la componente de tendencia. También parece verse una componente estacional, que es difícil de estudiar directamente debido a la tendencia. Sin embargo, esta se puede ver bien en el periodograma y correlograma, los cuales comentaremos posteriormente.
@@ -50,18 +50,20 @@
     En cuanto a la modelización de la tendencia, esta se basará en una modelización de ondas como sumas de senos y cosenos con frecuencia angular $\omega_i = \frac{2 \pi i}{12}$ con $i \in \{1, ..., 6\}$. Esto se debe a que la estacionalidad de la serie es de periodo $s = 12$ y por tanto el número de armónicos que podemos utilizar es $s / 2$. Por tanto, en este caso $12 / 2 = 6$. Por lo tanto, la componente regresora basada en ondas será de la forma $\gamma_{i,1} cos\left(\frac{2 \pi  i}{12} t\right) + \gamma_{i,2} sin\left(\frac{2 \pi i}{12} t\right)$ para la componente estacional $i$-ésima y la observación $t$-ésima. Es importante darse cuenta de que el $sin(\pi t) = 0$ para todo $t$ entero, por lo que ignoraremos dicho regresor en el modelo.
 
     \paragraph{}
-    Entonces, nuestro modelo requiere de la estimación de $3$ parámetros referidos a la componente de tendencia y $6 + 6 -1 = 11$ parámetros referidos a la componente de estacionalidad. Esto nos da un total de $3 + 11 = 14$ parámetros a estimar para tener bien definido el modelo. A continuación se indica el modelo completo:
+    Entonces, nuestro modelo requiere de la estimación de $3$ parámetros referidos a la componente de tendencia y $6 + 6 -1 = 11$ parámetros referidos a la componente de estacionalidad. Esto nos da un total de $3 + 11 = 14$ parámetros a estimar para tener bien definido el modelo. En la \autoref{eq:complete_waves_model} se indica el modelo completo.
 
-    \begin{align*}
-      E[X_{n + k}] = \beta_0 &+ \beta_1 \cdot (n + k) + \beta_2 \cdot(n + k) \\
-      &+ \gamma_{1,1} cos\left(\frac{2 \pi  }{12} t\right) + \gamma_{1,2} sin\left(\frac{2 \pi  }{12} t\right) \\
-      &+ \gamma_{2,1} cos\left(\frac{2 \pi 2}{12} t\right) + \gamma_{2,2} sin\left(\frac{2 \pi 2}{12} t\right) \\
-      &+ \gamma_{3,1} cos\left(\frac{2 \pi 3}{12} t\right) + \gamma_{3,2} sin\left(\frac{2 \pi 3}{12} t\right) \\
-      &+ \gamma_{4,1} cos\left(\frac{2 \pi 4}{12} t\right) + \gamma_{4,2} sin\left(\frac{2 \pi 4}{12} t\right) \\
-      &+ \gamma_{5,1} cos\left(\frac{2 \pi 5}{12} t\right) + \gamma_{5,2} sin\left(\frac{2 \pi 5}{12} t\right) \\
-      &+ \gamma_{6,1} cos\left(\frac{2 \pi 6}{12} t\right)
-    \end{align*}
-
+    \begin{equation}
+    \label{eq:complete_waves_model}
+      \begin{split}
+        E[X_{n + k}] = \beta_0 &+ \beta_1 \cdot (n + k) + \beta_2 \cdot(n + k) \\
+        &+ \gamma_{1,1} cos\left(\frac{2 \pi  }{12} t\right) + \gamma_{1,2} sin\left(\frac{2 \pi  }{12} t\right) \\
+        &+ \gamma_{2,1} cos\left(\frac{2 \pi 2}{12} t\right) + \gamma_{2,2} sin\left(\frac{2 \pi 2}{12} t\right) \\
+        &+ \gamma_{3,1} cos\left(\frac{2 \pi 3}{12} t\right) + \gamma_{3,2} sin\left(\frac{2 \pi 3}{12} t\right) \\
+        &+ \gamma_{4,1} cos\left(\frac{2 \pi 4}{12} t\right) + \gamma_{4,2} sin\left(\frac{2 \pi 4}{12} t\right) \\
+        &+ \gamma_{5,1} cos\left(\frac{2 \pi 5}{12} t\right) + \gamma_{5,2} sin\left(\frac{2 \pi 5}{12} t\right) \\
+        &+ \gamma_{6,1} cos\left(\frac{2 \pi 6}{12} t\right)
+      \end{split}
+    \end{equation}
 
     \begin{table}[htb!]
       \centering
@@ -77,20 +79,23 @@
     \end{table}
 
     \paragraph{}
-    Por lo tanto se ha procedido al ajuste de dicho modelo, el cual se muestran en la tabla \ref{table:waves_complete_params}. Analizando los p-valores (referidos al test acerca de si pueden ser considerados nulos), podemos ver que $\gamma_{1, 2}$ y  $\gamma_{3,2}$ no rechazan dicha hipótesis. Estos parámetros se refieren a los regresores $sin\left(\frac{2 \pi  }{12} t\right)$ y $sin\left(\frac{2 \pi 3}{12} t\right)$ respectivamente. Por lo tanto, vamos a realizar un nuevo ajuste sobre el modelo sin ellos. Para el ajuste de este modelo es necesario estimar $12$ parámetros, esto es dos menos que en el modelo anterior. Entonces, el modelo compuesto únicamente con aquellas ondas significativamente distintas de cero se define a continuación:
+    Por lo tanto se ha procedido al ajuste de dicho modelo, el cual se muestran en la \autoref{table:waves_complete_params}. Analizando los p-valores (referidos al test acerca de si pueden ser considerados nulos), podemos ver que $\gamma_{1, 2}$ y  $\gamma_{3,2}$ no rechazan dicha hipótesis. Estos parámetros se refieren a los regresores $sin\left(\frac{2 \pi  }{12} t\right)$ y $sin\left(\frac{2 \pi 3}{12} t\right)$ respectivamente. Por lo tanto, vamos a realizar un nuevo ajuste sobre el modelo sin ellos. Para el ajuste de este modelo es necesario estimar $12$ parámetros, esto es dos menos que en el modelo anterior. Entonces, el modelo compuesto únicamente con aquellas ondas significativamente distintas de cero se define en la \autoref{eq:significative_waves}.
 
-    \begin{align*}
-      E[X_{n + k}] = \beta_0 &+ \beta_1 \cdot (n + k) + \beta_2 \cdot(n + k) \\
-      &+ \gamma_{1,1} cos\left(\frac{2 \pi  }{12} t\right) \\
-      &+ \gamma_{2,1} cos\left(\frac{2 \pi 2}{12} t\right) + \gamma_{2,2} sin\left(\frac{2 \pi 2}{12} t\right) \\
-      &+ \gamma_{3,1} cos\left(\frac{2 \pi 3}{12} t\right) \\
-      &+ \gamma_{4,1} cos\left(\frac{2 \pi 4}{12} t\right) + \gamma_{4,2} sin\left(\frac{2 \pi 4}{12} t\right) \\
-      &+ \gamma_{5,1} cos\left(\frac{2 \pi 5}{12} t\right) + \gamma_{5,2} sin\left(\frac{2 \pi 5}{12} t\right) \\
-      &+ \gamma_{6,1} cos\left(\frac{2 \pi 6}{12} t\right)
-    \end{align*}
+    \begin{equation}
+    \label{eq:significative_waves}
+      \begin{split}
+        E[X_{n + k}] = \beta_0 &+ \beta_1 \cdot (n + k) + \beta_2 \cdot(n + k) \\
+        &+ \gamma_{1,1} cos\left(\frac{2 \pi  }{12} t\right) \\
+        &+ \gamma_{2,1} cos\left(\frac{2 \pi 2}{12} t\right) + \gamma_{2,2} sin\left(\frac{2 \pi 2}{12} t\right) \\
+        &+ \gamma_{3,1} cos\left(\frac{2 \pi 3}{12} t\right) \\
+        &+ \gamma_{4,1} cos\left(\frac{2 \pi 4}{12} t\right) + \gamma_{4,2} sin\left(\frac{2 \pi 4}{12} t\right) \\
+        &+ \gamma_{5,1} cos\left(\frac{2 \pi 5}{12} t\right) + \gamma_{5,2} sin\left(\frac{2 \pi 5}{12} t\right) \\
+        &+ \gamma_{6,1} cos\left(\frac{2 \pi 6}{12} t\right)
+      \end{split}
+    \end{equation}
 
     \paragraph{}
-    En la figura \ref{fig:fitted} se muestra el gráfico de la serie de predicciones (en color rojo) junto con la serie original (en color gris). Tal y como se puede apreciar, esta se ajusta a los datos. Este ajuste no es perfecto debido a la forma determinista del modelo, que no actualiza las componentes estacionales a lo largo del tiempo. Posteriormente se estudiarán en detalle los residuos para comprobar si la adecuación del modelo que se intuye en la figura \ref{fig:fitted} es razonable.
+    En la \autoref{fig:fitted} se muestra el gráfico de la serie de predicciones (en color rojo) junto con la serie original (en color gris). Tal y como se puede apreciar, esta se ajusta a los datos. Este ajuste no es perfecto debido a la forma determinista del modelo, que no actualiza las componentes estacionales a lo largo del tiempo. Posteriormente se estudiarán en detalle los residuos para comprobar si la adecuación del modelo que se intuye en la \autoref{fig:fitted} es razonable.
 
     \begin{figure}[htb!]
       \centering
@@ -100,7 +105,7 @@
     \end{figure}
 
     \paragraph{}
-    En este caso, los parámetros ajustados se muestran en la tabla \ref{table:waves_params}. Tal y como podemos apreciar en este caso todos los pvalores indican que los parámetros son significativamente distintos de cero (tomando un nivel de confianza del $90\%$). Entonces, procederemos al análisis de la serie de residuales obtenidos para tratar de confirmar el ajuste del modelo. Para ello debemos confirmar que esta serie se refiere a un ruido blanco (no existe correlacion entre las distintas observaciones, su media es cero y su varianza constante).
+    En este caso, los parámetros ajustados se muestran en la \autoref{table:waves_params}. Tal y como podemos apreciar en este caso todos los pvalores indican que los parámetros son significativamente distintos de cero (tomando un nivel de confianza del $90\%$). Entonces, procederemos al análisis de la serie de residuales obtenidos para tratar de confirmar el ajuste del modelo. Para ello debemos confirmar que esta serie se refiere a un ruido blanco (no existe correlacion entre las distintas observaciones, su media es cero y su varianza constante).
 
     \begin{table}[htb!]
       \centering
@@ -123,7 +128,7 @@
     \end{figure}
 
     \paragraph{}
-    Al igual que se ha indicado anteriormente para el caso de la serie original, en este caso se incluyen un conjunto de diagramas sobre la serie de residuales, la cual se muestra en la figura \ref{fig:residuals}. Al observar el gráfico de la serie vemos que este no tiene tendencia, así como que su media está centrada en el origen. Esto nos hace pensar en ruido blanco, sin embargo debemos fijarnos en el resto de gráficos para confirmar la incorrelacción de variables y la varianza constante.
+    Al igual que se ha indicado anteriormente para el caso de la serie original, en este caso se incluyen un conjunto de diagramas sobre la serie de residuales, la cual se muestra en la \autoref{fig:residuals}. Al observar el gráfico de la serie vemos que este no tiene tendencia, así como que su media está centrada en el origen. Esto nos hace pensar en ruido blanco, sin embargo debemos fijarnos en el resto de gráficos para confirmar la incorrelacción de variables y la varianza constante.
 
     \paragraph{}
     A partir del diagrama de dispersión \emph{rango-media} podemos comprobar que la variación del modelo no está relacionada con la media de este, por lo que podemos confirmar que la varianza se mantiene constante entre toda la serie de residuales. En cuanto a la correlación entre los residuales, tras analizar el correlograma y el periodograma se puede confirmar que no existe ninguna estructura bien definida sobre estos. En el caso del correlograma, la mayoría se encuentran bajo las bandas de confianza, sin representar una estructura claramente marcada.
@@ -137,25 +142,29 @@
   \section{Ajustar por mínimos cuadrados un modelo con tendencia más índices estacionales a la serie y comentar diferencias con el ajuste anterior.}
 
     \paragraph{}
-    En este apartado se pide ajustar el mismo modelo mediante una modelización basada en \emph{índices estacionales}. Esto es a partir de variables \emph{dummy} tales que toman el valor $1$ cuando la observación en cuestión se refiere al periodo estacional de la variable y $0$ en caso contrario. A continuación se define más matemáticamente:
+    En este apartado se pide ajustar el mismo modelo mediante una modelización basada en \emph{índices estacionales}. Esto es a partir de variables \emph{dummy} tales que toman el valor $1$ cuando la observación en cuestión se refiere al periodo estacional de la variable y $0$ en caso contrario. A continuación se define más matemáticamente en la \autoref{eq:seasonal_dummy}.
 
-    \begin{equation*}
+    \begin{equation}
+    \label{eq:seasonal_dummy}
       S_i =
       \begin{cases}
         1 & t \ mod \ i = 1 \\
         0 & \text{en otro caso}
      \end{cases}
-    \end{equation*}
+    \end{equation}
 
     \paragraph{}
-    A pesar de que esta modelización es equivalente en cuanto a la cantidad de variabilidad recogida por el modelo y las predicciones que realiza, no lo es desde el punto de vista de los valores de los parámetros (por ser una parametrización diferente). A continuación se muestra el modelo con tendencia cuadrática y representación de la estacionalidad mediante índices:
+    A pesar de que esta modelización es equivalente en cuanto a la cantidad de variabilidad recogida por el modelo y las predicciones que realiza, no lo es desde el punto de vista de los valores de los parámetros (por ser una parametrización diferente). A continuación se muestra el modelo con tendencia cuadrática y representación de la estacionalidad mediante índices en la \autoref{eq:indices_model}.
 
-    \begin{align*}
-      E[X_{n + k}] = \beta_0 &+ \beta_1 \cdot (n + k) + \beta_2 \cdot(n + k) \\
-      &+ \gamma_{1} S_{1} + \gamma_{2} S_{2} + \gamma_{3} S_{3} + \gamma_{4} S_{4} \\
-      &+ \gamma_{5} S_{5} + \gamma_{6} S_{6} + \gamma_{7} S_{7} + \gamma_{8} S_{8} \\
-      &+ \gamma_{9} S_{9} + \gamma_{10} S_{10}  + \gamma_{11} S_{11}
-    \end{align*}
+    \begin{equation}
+    \label{eq:indices_model}
+      \begin{split}
+        E[X_{n + k}] = \beta_0 &+ \beta_1 \cdot (n + k) + \beta_2 \cdot(n + k) \\
+        &+ \gamma_{1} S_{1} + \gamma_{2} S_{2} + \gamma_{3} S_{3} + \gamma_{4} S_{4} \\
+        &+ \gamma_{5} S_{5} + \gamma_{6} S_{6} + \gamma_{7} S_{7} + \gamma_{8} S_{8} \\
+        &+ \gamma_{9} S_{9} + \gamma_{10} S_{10}  + \gamma_{11} S_{11}
+      \end{split}
+    \end{equation}
 
     \paragraph{}
     Nótese que se ha eliminado el índicador referido al último índice. Esto se ha hecho dado que la parte del modelo que recoge la tendencia también tiene término independiente, lo cual produce una sobre parametrización y genera problemas de \emph{identificabilidad} entre los regresores. Este término se refiere a que ninguno de estos se pueda escribir como una combinación lineal del resto, lo cual significaría que sobra uno de ellos. Para solucionar esto existen distintas alternativas, sin embargo la herramienta utilizada (\texttt{SAS}) opta por eliminar el último regresor del modelo. Entonces, para el ajuste de este modelo necesitamos estimar el valor de $14$ parámetros, al igual que el modelo de ondas completas.
@@ -174,9 +183,9 @@
     \end{table}
 
     \paragraph{}
-    En la tabla \ref{table:indices_params} se muestran los parámetros ajustados del modelo. En este caso hay varios que pueden ser considerados distintos de $0$ (al igual que ocurría para el caso del modelo de ondas completas). Sin embargo, dado que ya se ha hecho en el anterior modelo, por cuestiones de simplicidad no se va a estudiar el modelo compuesto únicamente por los índices estacionales significativos.
+    En la \autoref{table:indices_params} se muestran los parámetros ajustados del modelo. En este caso hay varios que pueden ser considerados distintos de $0$ (al igual que ocurría para el caso del modelo de ondas completas). Sin embargo, dado que ya se ha hecho en el anterior modelo, por cuestiones de simplicidad no se va a estudiar el modelo compuesto únicamente por los índices estacionales significativos.
 
     \paragraph{}
-    Para comprobar la equivalencia entre el modelo de índices estacionales y el de ondas (incluyendo todos los ármonicos), se puede estudiar la varianza del modelo $\widehat{\sigma^2}$, la cual es coincide en ambos (se puede apreciar en las tablas \ref{table:waves_complete_params} y \ref{table:indices_params}). Esto es porque recogen la misma cantidad de variabilidad.
+    Para comprobar la equivalencia entre el modelo de índices estacionales y el de ondas (incluyendo todos los ármonicos), se puede estudiar la varianza del modelo $\widehat{\sigma^2}$, la cual es coincide en ambos (se puede apreciar en la \autoref{table:waves_complete_params} y en la  \autoref{table:indices_params}). Esto es porque recogen la misma cantidad de variabilidad.
 
 \end{document}

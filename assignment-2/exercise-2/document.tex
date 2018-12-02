@@ -29,12 +29,12 @@
       \paragraph{}
       [TODO]
 
-      \begin{figure}[htb!]
+      \begin{listing}[htb!]
         \centering
         \inputminted{SAS}{./res/code/a-01-data.sas}
         \caption{Generación del conjunto de datos \texttt{EJ2.SEMANAL}}
         \label{code:a_data}
-      \end{figure}
+      \end{listing}
 
       \paragraph{}
       [TODO]
@@ -64,12 +64,12 @@
       \paragraph{}
       [TODO]
 
-      \begin{figure}[htb!]
+      \begin{listing}[htb!]
         \centering
         \inputminted{SAS}{./res/code/a-02-expand.sas}
         \caption{Generación del conjunto de datos \texttt{EJ2.SEMANAL4} a partir de \texttt{EJ2.SEMANAL}}
         \label{code:a_expand}
-      \end{figure}
+      \end{listing}
 
       \paragraph{}
       [TODO]
@@ -108,12 +108,12 @@
       \paragraph{}
       [TODO]
 
-      \begin{figure}[htb!]
+      \begin{listing}[htb!]
         \centering
         \inputminted{SAS}{./res/code/b-01-esm-seasonal.sas}
         \caption{Código fuente para el ajuste de un modelo de \emph{Suavizado Exponencial con Estacionalidad} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
         \label{code:b_seasonal_esm}
-      \end{figure}
+      \end{listing}
 
       \paragraph{}
       [TODO]
@@ -162,12 +162,12 @@
       \paragraph{}
       [TODO]
 
-      \begin{figure}[htb!]
+      \begin{listing}[htb!]
         \centering
         \inputminted{SAS}{./res/code/b-01-esm-winteradd.sas}
         \caption{Código fuente para el ajuste de un modelo de \emph{Winter Aditivo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
         \label{code:b_winter_additive_esm}
-      \end{figure}
+      \end{listing}
 
       \paragraph{}
       [TODO]
@@ -210,12 +210,12 @@
       \paragraph{}
       [TODO]
 
-      \begin{figure}[htb!]
+      \begin{listing}[htb!]
         \centering
         \inputminted{SAS}{./res/code/b-01-esm-wintermul.sas}
         \caption{Código fuente para el ajuste de un modelo de \emph{Winter Multiplicativo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
         \label{code:b_winter_multiplicative_esm}
-      \end{figure}
+      \end{listing}
 
       \paragraph{}
       [TODO]
@@ -278,12 +278,12 @@
     \paragraph{}
     [TODO]
 
-    \begin{figure}[htb!]
+    \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/c-01-prediction.sas}
       \caption{Código fuente para el ajuste y predicción de las $5$ observaciones siguientes de un modelo de \emph{Winter Multiplicativo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
       \label{code:winter_multiplicative_prediction}
-    \end{figure}
+    \end{listing}
 
     \paragraph{}
     [TODO]
@@ -293,9 +293,9 @@
     Esta eleccion la hemos concluido por los motivos mencionados anteriormente :
 
     \begin{itemize}
-      \item Pvalores de la Figura 7( Constante de Suavizado Estacional Significativa)
-      \item Gráfica ACF de la Figura 8 (Autocorrelaciones menores que otro modelos)
-      \item Grafica WN de la Figura 9( Retardos con menor probabilidad menor de ser ruido blanco)
+      \item Pvalores de la \autoref{table:b_winter_multiplicative_significance} (Constante de Suavizado Estacional Significativa)
+      \item Gráfica ACF de la \autoref{img:b_winter_multiplicative_residuals_correlogram} (Autocorrelaciones menores que otro modelos)
+      \item Grafica WN de la \autoref{img:b_winter_multplicative_test_white_noise} (Retardos con menor probabilidad menor de ser ruido blanco)
     \end{itemize}
 
     \paragraph{}
@@ -323,15 +323,17 @@
     medir la capacidad de predicción de un modelo ajustado a dicha serie.
 
     \paragraph{}
-    Si se dispone de n observaciones en total, $x_1,x_2...x_n$ se reservan las últimas k observaciones, donde k es un múltiplo de s. Para el ajuste se utilizan m observaciones ($m = n - k$) y la medida se obtiene sumando los cuadrados de los
-    residuales un paso, dos,.., k pasos hacia adelante:
+    Si se dispone de n observaciones en total, $x_1,x_2...x_n$ se reservan las últimas k observaciones, donde k es un múltiplo de s. Para el ajuste se utilizan m observaciones ($m = n - k$) y la medida se obtiene sumando los cuadrados de los residuales $\{1, 2, ..., k\}$ pasos hacia adelante. Esto se define en la \autoref{eq:sse_p}.
 
-    \begin{align*}
-      SSE_p
-      &= \sum_{j = 1} ^ k (x_{m + j} - x_{m}(j)) ^ 2 \\
-      &= \sum_{j = 1} ^ k e_m(j) ^ 2 \\
-      &= e_m(1) ^ 2 + e_m(2) ^ 2 + ... + e_m(k) ^ 2
-    \end{align*}
+    \begin{equation}
+    \label{eq:sse_p}
+      \begin{split}
+        SSE_p
+        &= \sum_{j = 1} ^ k (x_{m + j} - x_{m}(j)) ^ 2 \\
+        &= \sum_{j = 1} ^ k e_m(j) ^ 2 \\
+        &= e_m(1) ^ 2 + e_m(2) ^ 2 + ... + e_m(k) ^ 2
+      \end{split}
+    \end{equation}
 
     \begin{table}[htb!]
       \centering
@@ -365,52 +367,52 @@
     \paragraph{}
     [TODO]
 
-    \begin{figure}[htb!]
+    \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/d-01-cross-validation.sas}
       \caption{[TODO]}
       \label{code:d_cross_validation}
-    \end{figure}
+    \end{listing}
 
     \paragraph{}
     [TODO]
 
-    \begin{figure}[htb!]
+    \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/d-02-prediction-error-esm-seasonal.sas}
       \caption{[TODO]}
       \label{code:d_prediction_error_esm_seasonal}
-    \end{figure}
+    \end{listing}
 
     \paragraph{}
     [TODO]
 
-    \begin{figure}[htb!]
+    \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/d-02-prediction-error-esm-winteradd.sas}
       \caption{[TODO]}
       \label{code:d_prediction_error_esm_winteradd}
-    \end{figure}
+    \end{listing}
 
     \paragraph{}
     [TODO]
 
-    \begin{figure}[htb!]
+    \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/d-02-prediction-error-esm-wintermul.sas}
       \caption{[TODO]}
       \label{code:d_prediction_error_esm_wintermul}
-    \end{figure}
+    \end{listing}
 
     \paragraph{}
     [TODO]
 
-    \begin{figure}[htb!]
+    \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/d-03-error-summary.sas}
       \caption{[TODO]}
       \label{code:d_summary_error}
-    \end{figure}
+    \end{listing}
 
     \paragraph{}
     [TODO]
@@ -445,22 +447,22 @@
     \paragraph{}
     [TODO]
 
-    \begin{figure}[htb!]
+    \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/e-prediction-forecast-method-1.sas}
       \caption{Código Fuente para cálculo del error de predicción $SSE_p$ mediante el \texttt{proc forecast} por el primer método.}
       \label{code:prediction_forecast_method_2}
-    \end{figure}
+    \end{listing}
 
     \paragraph{}
     [TODO]
 
-    \begin{figure}[htb!]
+    \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/e-prediction-forecast-method-2.sas}
       \caption{Código Fuente para cálculo del error de predicción $SSE_p$ mediante el \texttt{proc forecast} por el segundo método.}
       \label{code:prediction_forecast_method_2}
-    \end{figure}
+    \end{listing}
 
     \paragraph{}
     [TODO]
