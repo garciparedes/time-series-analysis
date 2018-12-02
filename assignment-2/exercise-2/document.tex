@@ -22,44 +22,60 @@
   \label{sec:a}
 
     \paragraph{}
-    [TODO]
+    En este trabajo se va a analizar una serie temporal unidimensional referida al número de casos registrados en España de problemas re tuberculosis respiratoria. La serie original se da en periodos acumulados de manera semanal, por lo que el número de observaciones anuales es variable de $52$. Sin embargo, nótese que este valor puede variar sutilmente debido a los días concretos de comienzo y fin de cada año.
+
+    \paragraph{}
+    Otra de las dificultades de este análisis procede de la enorme amplitud del periodo de la serie, que complica el análisis estacional, así como el ajuste de la serie a nivel computacional drásticamente. Por esta razón, se va a proceder al estudio de la serie mediante agrupamiento de las observaciones en periodos de \emph{4 semanas}. Esto implica $52 / 4 = 13$ observaciones anuales, las cuales se pueden analizar de una manera más cómoda sin perder demasiada información.
+
+    \paragraph{}
+    Para el estudio de las series en cuestión (así como su ajuste) se utilizará el sistema \texttt{SAS}, para el cual se incluyen distintos fragmentos de código que permiten la reconstrucción del análisis. La mayoría de dichos bloques de código se han incluido en el apartado en cuestión del documento. Sin embargo, otros que no se han considerado lo suficientemente relevantes para el estudio se han incluido en el Apéndice \ref{appendix:source_code_sas}. Para la generación de algunos gráficos, así como otras partes del análisis, se ha utilizado el lenguaje \texttt{R}, cuyo código fuente se incluye en el Apéndice \ref{appendix:source_code_r} por la misma razón que el caso anterior.
+
+    \paragraph{}
+    El resto del apartado se divide de la siguiente manera: en el \autoref{sec:weekly_analysis} se estudia la serie sin agrupar, para posteriormente realizar el agrupamiento y analizar la serie resultante en \autoref{sec:weekly4_analysis}.
 
     \subsection{Serie Semanal: $\{X_t\}$}
+    \label{sec:weekly_analysis}
 
       \paragraph{}
-      [TODO]
-
-      \begin{listing}[htb!]
-        \centering
-        \inputminted{SAS}{./res/code/a-01-data.sas}
-        \caption{Generación del conjunto de datos \texttt{EJ2.SEMANAL}}
-        \label{code:a_data}
-      \end{listing}
-
-      \paragraph{}
-      [TODO]
+      Para el análisis de la serie semanal, a la cual denotaremos por $\{X_t\}$ de forma matemática, lo primero es cargarla en el sistema \texttt{SAS}, lo cual se puede llevar a cabo a través del la ejecución del \autoref{code:data_import}. Lo primero en que nos fijamos es el número de observaciones de la serie, las cuales son $520$ ($52$ observaciones y un total de $10$ años). Otra de las cuestiones que hay que tener en cuenta para que el análisis de la serie sea realizado de manera adecuada es fijar la fecha de manera coherente. Si recurrimos al calendario, el \emph{1 de Enero de 1982} fue \emph{Domingo}, lo cual debemos indicar para que las fechas sean construidas de manera adecuada dado que en las observaciones frontera entre un distintos años, esto puede influir de manera perjudicial para el análisis.
 
       \begin{figure}[htb!]
         \centering
-        \includegraphics[width=.75\linewidth]{semanal}
+        \includegraphics[width=\linewidth]{semanal}
         \caption{Gráfico de la serie, gráfico de dispersión \emph{rango-media}, \emph{correlograma} y \emph{periodograma} del conjunto de datos \texttt{EJ2.SEMANAL}}
         \label{img:semanal}
       \end{figure}
 
       \paragraph{}
-      [TODO]
+      Una vez cargada formateada de manera apropiada la fecha en la serie, ya se puede proceder al análisis descriptivo de la misma. Para ello se ha utilizado el \autoref{code:semanal_analysis}, a través del cual hemos obtenido la \autoref{img:semanal}. Tal y como se puede apreciar a través del gráfico de la serie, esta presenta una tendencia que podría aproximarse a partir de un polinomio de orden cuadrático, alcanzando su máximo entre los años $1986$ y $1987$. Algo interesante es la forma de dicha tendencia, que experimenta un crecimiento de forma lineal desde $1981$ hasta su máximo, para después sufrir un fuerte decrecimiento (que también se podría considerar lineal) durante el año $1987$. El resto de la serie ($[1988,1992)$) mantiene una tendencia que podría ser considerada constante. Por lo tanto, esta serie presenta cambios de tendencia (lo cual requerirá modelos basados en \emph{Suavizado Exponencial} tal y como veremos en los próximos apartados). Además de esto, el gráfico de la serie parece mostrar una componente estacional, sin embargo es dificil ver esto, por lo que posteriormente procederemos a diferenciarla para tratar de visualizarlo de manera más clara. Sin embargo, tal y como se indica a continuación, esto se aprecia mejor en la serie agrupada cada cuatro semanas $\{Y_t\}$.
+
+      \paragraph{}
+      Continuando con los diagramas de la \autoref{img:semanal}, a partir del gráfico de dispersión \emph{rango-media}, se puede apreciar cierta relación entre estas, lo cual implica una relación entre el nivel y la dispersión en la serie. Es decir, cuanto mayor es el valor medio en la serie, mayor es la varianza de los datos. Para corregir esto existen distintos métodos, entre los que se encuentran transformaciones de tipo \emph{Box-Cox} que tratan de eliminar dicha relación. Sin embargo, el estudio de dichos métodos no son el objetivo de este análisis.
+
+      \paragraph{}
+      En cuanto al \emph{correlograma}, en este se aprecia una alta correlacion entre las variables (lo cual indica tendencia). Estos decrecimientos pueden parecer exponenciales (lo cual indicaría estacionaridad). Sin embargo, hay que tener en cuenta que en las $64$ correlaciones que se muestran, son considerados significativamente distintos de cero. A partir de este gráficos, podemos intuir la estructura estacional de la serie. Sin embargo, es complicado poder estudiarla detalladamente debido a la tendencia, así como el enorme periodo de la serie. Aunque destaca sobre el resto la corelación $52$ como era de esperar, ya que indica el periodo de la serie. También son llamativas las próximas a las correlaciones $17$ y $34$, lo cual podría indicar un periodo \emph{cuatrimestral}.
+
+      \paragraph{}
+      Para finalizar, en el periodograma se aprecia que el primer armónico destaca fuertemente sobre el resto, lo cual se debe a la tendencia de la serie. Debido al elevado valor que toma dicho armónico, no es posible estudiar el resto de valores de manera sencilla.
+
+      \paragraph{}
+      Para tratar de reducir la componente de tendencia y poder analizar de manera más cómoda la estacionalidad, procedemos a realizar una diferenciación sobre la serie. En la \autoref{img:semanal_diff} se muestran los gráficos descriptivos referidos a la serie diferenciada.
 
       \begin{figure}[htb!]
         \centering
-        \includegraphics[width=.75\linewidth]{semanal-diff}
+        \includegraphics[width=\linewidth]{semanal-diff}
         \caption{Gráfico de la serie, gráfico de dispersión \emph{rango-media}, \emph{correlograma} y \emph{periodograma} del conjunto de datos \texttt{EJ2.SEMANAL} tras aplicar una diferenciación de primer orden.}
         \label{img:semanal_diff}
       \end{figure}
 
       \paragraph{}
-      [TODO]
+      Lo primero que llama la atención tras la diferenciación es la eliminación completa de la tendencia. En las zonas de crecimiento y decrecimiento ahora se muestra un mayor grado de variabilidad. También se aprecia en mayor medida la estructura estacional, pero nuevamente el enorme periodo de la serie no permite un análisis sencillo sobre la misma (en el \autoref{sec:weekly4_analysis}) se puede estudiar más cómodamente la estacionalidad.
 
-    \subsection{Serie  4 semanas: $\{Y_t\}$}
+      \paragraph{}
+      Siguiendo con la interpretación de los gráficos de la \ref{img:semanal_diff}, la relación entre nivel y dispersión sigue presente, lo cual se puede comprobar a través del gráfico \emph{rango-media}. Esto era previsible ya que las diferenciaciones no eliminan dichos sucesos. En cuanto al \emph{correlograma}, este muestra una alta correlación en sentido negativo con el primer retardo. Sin embargo, lo que más destaca es la estructura cíclica del resto de correlaciones, la cual se puede apreciar mucho mejor en la serie agrupada que comentaremos posteriormente. Para finalizar, en el \emph{periodograma} se puede apreciar que hay armónicos que destacan sobre el resto y marcan tendencia, pero que estudiaremos en la serie agrupada cada cuatro semanas por comodidad y sencillez en el análisis.
+
+    \subsection{Serie 4 semanas: $\{Y_t\}$}
+    \label{sec:weekly4_analysis}
 
       \paragraph{}
       [TODO]
@@ -76,7 +92,7 @@
 
       \begin{figure}[htb!]
         \centering
-        \includegraphics[width=.75\linewidth]{semanal4}
+        \includegraphics[width=\linewidth]{semanal4}
         \caption{Gráfico de la serie, gráfico de dispersión \emph{rango-media}, \emph{correlograma} y \emph{periodograma} del conjunto de datos \texttt{EJ2.SEMANAL4}}
         \label{img:semanal4}
       \end{figure}
@@ -86,7 +102,7 @@
 
       \begin{figure}[htb!]
         \centering
-        \includegraphics[width=.75\linewidth]{semanal4-diff}
+        \includegraphics[width=\linewidth]{semanal4-diff}
         \caption{Gráfico de la serie, gráfico de dispersión \emph{rango-media}, \emph{correlograma} y \emph{periodograma} del conjunto de datos \texttt{EJ2.SEMANAL4} tras aplicar una diferenciación de primer orden.}
         \label{img:semanal4_diff}
       \end{figure}
@@ -272,7 +288,7 @@
     \paragraph{}
     [TODO ]
 
-  \section{Elegir el modelo que se considere más apropiado entre los tres del apartado \ref{sec:b} y con ese modelo dar las predicciones para las próximas $6$ observaciones. Justificar la elección del modelo.}
+  \section{Elegir el modelo que se considere más apropiado entre los tres del \autoref{sec:b} y con ese modelo dar las predicciones para las próximas $6$ observaciones. Justificar la elección del modelo.}
   \label{sec:c}
 
     \paragraph{}
@@ -311,7 +327,7 @@
     \paragraph{}
     [TODO]
 
-  \section{Utilizando en el ajuste solamente los datos hasta el final de $1990$ que no incluyan ningún caso de $1991$, calcular los errores de predicción para el año $1991$ y su correspondiente $SSE_p$ (suma de $s$ errores al cuadrado correspondientes a predicciones $\{1, 2, ..., s\}$ pasos hacia adelante) para los tres modelos del apartado \ref{sec:b}. Comentar si la elección hecha en el apartado \ref{sec:c} está de acuerdo con los resultados obtenidos en este caso al comparar la capacidad de predicción de los distintos modelos para el año $1991$. Adjuntad el programa con el lenguaje control que hayáis utilizado en este apartado.}
+  \section{Utilizando en el ajuste solamente los datos hasta el final de $1990$ que no incluyan ningún caso de $1991$, calcular los errores de predicción para el año $1991$ y su correspondiente $SSE_p$ (suma de $s$ errores al cuadrado correspondientes a predicciones $\{1, 2, ..., s\}$ pasos hacia adelante) para los tres modelos del \autoref{sec:b}. Comentar si la elección hecha en el apartado \autoref{sec:c} está de acuerdo con los resultados obtenidos en este caso al comparar la capacidad de predicción de los distintos modelos para el año $1991$. Adjuntad el programa con el lenguaje control que hayáis utilizado en este apartado.}
   \label{sec:d}
 
     \paragraph{}
@@ -417,7 +433,7 @@
     \paragraph{}
     [TODO]
 
-  \section{Obtener con el \texttt{proc forecast} de \emph{SAS} el $SSE_p$ para el modelo de \emph{Winter Multiplicativo} con las mismas constantes de suavizado y los valores iniciales de los parámetros lo más próximos posible a los obtenidos en el apartado \ref{sec:d} con el \texttt{proc esm} para este modelo. Adjuntar el programa con el lenguaje control que hayáis utilizado para obtenerlo.}
+  \section{Obtener con el \texttt{proc forecast} de \emph{SAS} el $SSE_p$ para el modelo de \emph{Winter Multiplicativo} con las mismas constantes de suavizado y los valores iniciales de los parámetros lo más próximos posible a los obtenidos en el \autoref{sec:d} con el \texttt{proc esm} para este modelo. Adjuntar el programa con el lenguaje control que hayáis utilizado para obtenerlo.}
   \label{sec:e}
 
     \paragraph{}
@@ -467,10 +483,38 @@
     \paragraph{}
     [TODO]
 
-  \section{Ajustar un modelo para la serie $\{ Xt \}$ con el módulo \texttt{Time Series Forecasting System} de \emph{SAS} razonando porqué se ha elegido. Utilizar el modelo elegido para predecir valores futuros de esta serie y establecer la comparación con los seis valores obtenidos en el apartado \ref{sec:c} junto con sus bandas de predicción.}
+  \section{Ajustar un modelo para la serie $\{ Xt \}$ con el módulo \texttt{Time Series Forecasting System} de \emph{SAS} razonando porqué se ha elegido. Utilizar el modelo elegido para predecir valores futuros de esta serie y establecer la comparación con los seis valores obtenidos en el \autoref{sec:c} junto con sus bandas de predicción.}
   \label{sec:f}
 
     \paragraph{}
     [TODO]
+
+  \appendix
+  \section{Código Fuente Auxiliar}
+  \label{appendix:source_code}
+
+    \subsection{Código Fuente \texttt{SAS}}
+    \label{appendix:source_code_sas}
+      [TODO]
+
+      \begin{listing}[htb!]
+        \centering
+        \inputminted{SAS}{./res/code/a-01-data.sas}
+        \caption{Generación del conjunto de datos \texttt{EJ2.SEMANAL}}
+        \label{code:data_import}
+      \end{listing}
+
+
+    \subsection{Código Fuente \texttt{R}}
+    \label{appendix:source_code_r}
+      [TODO]
+
+      \begin{listing}[htb!]
+        \centering
+        \inputminted{SAS}{./res/code/r/semanal.r}
+        \caption{[TODO]}
+        \label{code:semanal_analysis}
+      \end{listing}
+
 
 \end{document}
