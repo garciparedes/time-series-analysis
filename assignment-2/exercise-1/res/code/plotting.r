@@ -16,7 +16,7 @@ RangeMean <- function(x, seasonality) {
     n <- length(x)
     seq(1, n, by=seasonality) %>%
     sapply(function(i){
-        a <- x[i:(i+seasonality)]
+        a <- x[i:(i + seasonality - 1)]
         c(mean=mean(a, na.rm=TRUE), range=diff(range(a,na.rm=TRUE)))
     }) %>%
     t() %>%
