@@ -53,7 +53,7 @@
       Continuando con los diagramas de la \autoref{img:semanal}, a partir del gráfico de dispersión \emph{rango-media}, se puede apreciar cierta relación entre estas, lo cual implica una relación entre el nivel y la dispersión en la serie. Es decir, cuanto mayor es el valor medio en la serie, mayor es la varianza de los datos. Para corregir esto existen distintos métodos, entre los que se encuentran transformaciones de tipo \emph{Box-Cox} que tratan de eliminar dicha relación. Sin embargo, el estudio de dichos métodos no son el objetivo de este análisis.
 
       \paragraph{}
-      En cuanto al \emph{correlograma}, en este se aprecia una alta correlacion entre las variables (lo cual indica tendencia). Estos decrecimientos pueden parecer exponenciales (lo cual indicaría estacionaridad). Sin embargo, hay que tener en cuenta que en las $64$ correlaciones que se muestran, son considerados significativamente distintos de cero. A partir de este gráficos, podemos intuir la estructura estacional de la serie. Sin embargo, es complicado poder estudiarla detalladamente debido a la tendencia, así como el enorme periodo de la serie. Aunque destaca sobre el resto la corelación $52$ como era de esperar, ya que indica el periodo de la serie. También son llamativas las próximas a las correlaciones $17$ y $34$, lo cual podría indicar un periodo \emph{cuatrimestral}.
+      En cuanto al \emph{correlograma}, en este se aprecia una alta correlacion entre las variables (lo cual indica tendencia). Estos decrecimientos parecen localmente exponenciales (lo cual indicaría estacionaridad local), por lo que modelos basados en suavizado exponencial deberían ajustarse bien a la serie. A partir de este gráficos, podemos intuir la estructura estacional de la serie. Sin embargo, es complicado poder estudiarla detalladamente debido a la tendencia, así como el enorme periodo de la serie. Aunque destaca sobre el resto la corelación $52$ como era de esperar, ya que indica el periodo de la serie. También son llamativas las próximas a las correlaciones $17$ y $34$, lo cual podría indicar un periodo \emph{cuatrimestral}.
 
       \paragraph{}
       Para finalizar, en el periodograma se aprecia que el primer armónico destaca fuertemente sobre el resto, lo cual se debe a la tendencia de la serie. Debido al elevado valor que toma dicho armónico, no es posible estudiar el resto de valores de manera sencilla.
@@ -72,13 +72,13 @@
       Lo primero que llama la atención tras la diferenciación es la eliminación completa de la tendencia. En las zonas de crecimiento y decrecimiento ahora se muestra un mayor grado de variabilidad. También se aprecia en mayor medida la estructura estacional, pero nuevamente el enorme periodo de la serie no permite un análisis sencillo sobre la misma (en el \autoref{sec:weekly4_analysis}) se puede estudiar más cómodamente la estacionalidad.
 
       \paragraph{}
-      Siguiendo con la interpretación de los gráficos de la \ref{img:semanal_diff}, la relación entre nivel y dispersión sigue presente, lo cual se puede comprobar a través del gráfico \emph{rango-media}. Esto era previsible ya que las diferenciaciones no eliminan dichos sucesos. En cuanto al \emph{correlograma}, este muestra una alta correlación en sentido negativo con el primer retardo. Sin embargo, lo que más destaca es la estructura cíclica del resto de correlaciones, la cual se puede apreciar mucho mejor en la serie agrupada que comentaremos posteriormente. Para finalizar, en el \emph{periodograma} se puede apreciar que hay armónicos que destacan sobre el resto y marcan tendencia, pero que estudiaremos en la serie agrupada cada cuatro semanas por comodidad y sencillez en el análisis.
+      Siguiendo con la interpretación de los gráficos de la \ref{img:semanal_diff}, la relación entre nivel y dispersión se ha reducido drásticamente, lo cual se puede comprobar a través del gráfico \emph{rango-media}. En cuanto al \emph{correlograma}, este muestra una alta correlación en sentido negativo con el primer retardo. Sin embargo, lo que más destaca es la estructura cíclica del resto de correlaciones, la cual se puede apreciar mucho mejor en la serie agrupada que comentaremos posteriormente. Para finalizar, en el \emph{periodograma} se puede apreciar que hay armónicos que destacan sobre el resto y marcan tendencia, pero que estudiaremos en la serie agrupada cada cuatro semanas por comodidad y sencillez en el análisis.
 
     \subsection{Serie 4 semanas: $\{Y_t\}$}
     \label{sec:weekly4_analysis}
 
       \paragraph{}
-      [TODO]
+      Para trabajar con la serie agrupada en periodos de cuatro semanas. Es decir, la suma de observaciones de de $4$ en $4$ se ha utilizado el \autoref{code:a_expand}. Este se basa en la sentencia \texttt{proc expand} que facilita el agrupamiento/separación de observaciones indexadas sobre un soporte temporal.
 
       \begin{listing}[htb!]
         \centering
@@ -88,7 +88,7 @@
       \end{listing}
 
       \paragraph{}
-      [TODO]
+      Una vez creado el conjunto de datos que se utilizará para el análisis, el siguiente paso es realizar un estudio descriptivo sobre el mismo. En este caso estamos trabajando con $520 / 4 = 130$ observaciones en periodos de $4$ semanas, comenzando el \emph{1 de Enero de 1982} que, como indicamos anteriormente, fue \emph{Domingo}. Es de especial importancia darse cuenta de que los periodos de $4$ semanas no coinciden con periodos mensuales. En este caso la amplitud del periodo es $13$, mientras que en los análisis mensuales, es de $12$ observaciones. Es necesario tener esto presente a lo largo del documento.
 
       \begin{figure}[htb!]
         \centering
@@ -98,7 +98,19 @@
       \end{figure}
 
       \paragraph{}
-      [TODO]
+      En la \autoref{img:semanal4} se muestran distintos gráficos descriptivos referidos a la serie agrupada cada 4 semanas $\{Y_t\}$, los cuales procedemos a analizar e interpretar a continuación. Lo más destacado (y obvio) de estos es que son un reflejo simplificado de los de la serie semanal $\{X_t\}$ que se muestran en la \autoref{img:semanal}.
+
+      \paragraph{}
+      Si nos fijamos en el gráfico de la serie, seguimos viendo la tendencia, que indicamos anteriormente, pero en este caso de una manera mucho más sencilla de interpretar. Ahora se ve más clara la estructura cuadrática de la misma, junto con una relación entre nivel y dispersión (que se confirma sobre el gráfico de dispersión \emph{rango-media}). Otra de las partes que más llama la atención al visualizar el gráfico de la serie es que ahora es mucho más sencillo fijarse en la coponente estacional de la serie, que sigue una estructura periodica tras cada $13$ observaciones.
+
+      \paragraph{}
+      A partir del \emph{correlograma} se puede apreciar la misma estructura de correlaciones que se indicaba sobre la serie semanal, donde destaca una estructura periódica (que estudiaremos más en detalle sobre la serie diferenciada). Al igual que antes, la serie no puede ser considerada estacionaria porque el decrecimiento entre correlaciones no es exponencial, aunque de la misma manera que antes, si que presenta esta estructura de manera local, lo cual nos confirma que un ajuste basado en suavizado exponencial debería ser acertado (sin olvidar la componente estacional).
+
+      \paragraph{}
+      En cuanto al \emph{periodograma}, al igual que antes, uno de los primeros armónicos destacan fuertemente sobre el resto, lo cual intuimos que se debe a la tendencia de la serie. Además, en este caso se puede apreciar algo que no veíamos en la serie sin agrupar. Esto es que los armónicos de periodo $i/13$ destacan sutilmente sobre su entorno. En concreto, destacan sobre el resto los armónicos $1/13$ y $3/13$. Aunque el primero de ellos no parece hacerlo de manera determinista, ya que no coincide exactamente con el valor $1/13$, sino que es algo menor.
+
+      \paragraph{}
+      Para poder estudiar la componente estacional con mayor precisión se ha procedido a la diferenciación de la serie agrupada $\{Y_t\}$, cuyos gráficos descriptivos se muestran en la \autoref{img:semanal4_diff}. Al igual que antes, esta serie es una versión simplicada de la estudiada para la serie semanal $\{X_t\}$, que se muestra en la \autoref{img:semanal_diff}.
 
       \begin{figure}[htb!]
         \centering
@@ -108,10 +120,13 @@
       \end{figure}
 
       \paragraph{}
-      [TODO]
+      El \emph{gráfico de la serie} repite de manera cíclica el mismo patrón, lo cual confirma la existencia de estacionalidad, aunque a través de este diagrama es difícil de interpretar. Al igual que antes, el diagrama de dispersión \emph{rango-media} muestra una estavilización de la dispersión, lo cual podría indicarnos que modelos basados en diferenciación no requerirán de una estabilización de la varianza previa mediante transformaciones. En cuanto al \emph{correlograma}, ahora es trivial interpretar la existencia de estacionalidad, debido a la estructura de correlaciones, que se repite cíclicamente alternando entre valores positivos y negativos. En cuanto al \emph{periodograma}, este nos muestra que los armónicos que siguen la forma $i/13$ destacan sobre el resto.
+
+      \paragraph{}
+      En el título del apartado se dice que es necesario indicar los armónicos significativos para la serie agrupada en periodos de $4$ semanas y que denotamos por $Y_t$. Por tanto, tras el análisis de la misma, podemos confirmar que el \textbf{armónico referido a la frecuencia $3/13$ es muy significativo}. También lo son, aunque de manera mas sutil los armónicos $1/13$, $4/13$, $6/13$ y $2 / 13$ respectivamente. Aunque para confirmar su significancia se deberían los respectivos contrastes de hipótesis.
 
     \paragraph{}
-    [TODO]
+    Antes de finalizar el apartado, se concluye que el agrupamiento de la serie semanal original en observaciones de $4$ semanas es una estrategia que permite analizar la estructura inherente de la serie de manera mucho sencilla e intuitiva. Dado que el objetivo es tratar de comprender la estructura de la serie para así poder ajustar un modelo coherente para la misma, esto simplifica en gran medida el trabajo, no solo a nivel analítico, sino también a nivel computacional, dado que el número de parámetros a estimar se reduce drásticamente.
 
   \section{Ajustar por suavizado exponencial, con el \texttt{proc esm}, los tres modelos que se consideren más apropiados para la serie $\{Y_t\}$ y comprobar su adecuación.}
   \label{sec:b}
