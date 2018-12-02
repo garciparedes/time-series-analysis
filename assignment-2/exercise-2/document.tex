@@ -160,10 +160,10 @@
       \end{table}
 
       \paragraph{}
-      Observamos que para la constante de suavizado estacional no se rechaza su significancia a cualquier nivel ya que el pvalor es 0.99.
+      Observamos que para la constante de suavizado estacional no se rechaza su significancia a cualquier nivel ya que el $p-valor$ del test se encuentra próximo $0.99$.
 
       \paragraph{}
-      En cambio, si se rechazará para la constante de suavizado para la media, donde el pvalor es $<0.001$. Será conveniente diferenciar ya que el estimador estacional es cercano a 0. A continuación adjuntamos el gráfico del ACF de residuales:
+      En cambio, si se rechazará para la constante de suavizado para la media, donde $p-valor < 0.001$. Será conveniente diferenciar ya que el estimador estacional es cercano a 0. A continuación adjuntamos el gráfico del ACF de residuales:
 
       \begin{figure}[htb!]
         \centering
@@ -196,7 +196,7 @@
       \begin{listing}[htb!]
         \centering
         \inputminted{SAS}{./res/code/b-01-esm-winteradd.sas}
-        \caption{Código fuente para el ajuste de un modelo de \emph{Winter Aditivo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
+        \caption{Ajuste de un modelo de \emph{Winter Aditivo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
         \label{code:b_winter_additive_esm}
       \end{listing}
 
@@ -244,7 +244,7 @@
       \begin{listing}[htb!]
         \centering
         \inputminted{SAS}{./res/code/b-01-esm-wintermul.sas}
-        \caption{Código fuente para el ajuste de un modelo de \emph{Winter Multiplicativo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
+        \caption{Ajuste de un modelo de \emph{Winter Multiplicativo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
         \label{code:b_winter_multiplicative_esm}
       \end{listing}
 
@@ -252,7 +252,7 @@
       [TODO]
 
       \paragraph{}
-      Para comenzar se adjunta la tabla de significancia:
+      Para comenzar se adjunta la tabla de significancia, la cual se muestra en la \autoref{table:b_winter_multiplicative_significance}.
 
       \begin{table}[htb!]
         \centering
@@ -262,7 +262,7 @@
       \end{table}
 
       \paragraph{}
-      Observamos en la tabla anterior , que en este caso si se rechaza para la constante de suavizado estacional con un pvalor$ <0.001$ y para el nivel. Sin embargo, para la constantes de suavizado para la tendencia , no se rechaza la hipótesis de $\alpha_2 =0$, por lo que concluimos no será adecuado suavizar dicha componente. Vemos que su estimador es próximo a cero, por lo que será conveniente diferenciar o utilizar modelos ARIMA.
+      Observamos en la tabla anterior, que en este caso si se rechaza para la constante de suavizado estacional con un pvalor$ <0.001$ y para el nivel. Sin embargo, para la constantes de suavizado para la tendencia , no se rechaza la hipótesis de $\alpha_2 =0$, por lo que concluimos no será adecuado suavizar dicha componente. Vemos que su estimador es próximo a cero, por lo que será conveniente diferenciar o utilizar modelos ARIMA.
 
       \begin{figure}[htb!]
         \centering
@@ -312,7 +312,7 @@
     \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/c-01-prediction.sas}
-      \caption{Código fuente para el ajuste y predicción de las $5$ observaciones siguientes de un modelo de \emph{Winter Multiplicativo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
+      \caption{Ajuste y predicción de las $5$ observaciones siguientes de un modelo de \emph{Winter Multiplicativo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
       \label{code:winter_multiplicative_prediction}
     \end{listing}
 
@@ -330,13 +330,13 @@
     \end{itemize}
 
     \paragraph{}
-    Por último, obtenemos las predicciones para las seis siguientes observaciones.
+    Por último, obtenemos las predicciones para las seis siguientes observaciones, las cuales se muestran en la \autoref{table:predictions}.
 
     \begin{table}[htb!]
       \centering
       \includegraphics[width=0.75\textwidth]{PredC}
-      \caption{Predicciones.Modelo Multiplicativo}
-      \label{}
+      \caption{Prediciones para las próximas $6$ observaciones basadas en el modelo de \emph{Winter Multiplicativo}.}
+      \label{table:predictions}
     \end{table}
 
     \paragraph{}
@@ -366,82 +366,62 @@
       \end{split}
     \end{equation}
 
-    \begin{table}[htb!]
-      \centering
-      \includegraphics[width=0.75\textwidth]{PredC}
-      \caption{Predicciones.Modelo Multiplicativo}
-      \label{}
-    \end{table}
-
     \paragraph{}
-    A continuación, se adjunta una tabla con los valores predichos, los errores de predicción, y el SSE acumulado para cada observación de las 13 predichas, traduciéndose finalmente en el SSEp en la observacion 130.
+    En la \autoref{table:sse_p_complete} se muestran los valores predichos, los errores de predicción, y el $SSE_p$ acumulado para cada una de las $13$ observaciones predichas, traduciéndose finalmente en el $SSE_p$ en la observacion $130$.
 
     \begin{table}[htb!]
       \centering
       \includegraphics[width=\textwidth]{cabecera}
       \includegraphics[width=\textwidth]{Errores}
-      \caption{Errores Modelos. Seasonal Add Mul [TODO]}
-      \label{}
+      \caption{Suma de Cuadrados del Error de Predicción acumulada para $13$ observaciones hacia delante para el modelo de \emph{Suavizado Exponencial con Estacionalidad}, modelo de \emph{Winter Aditivo} y modelo de \emph{Winter Multiplicativo}.}
+      \label{table:sse_p_complete}
     \end{table}
 
     \paragraph{}
-    En la tabla siguiente se adjunta la capacidad de predicción para los 3 modelos, donde observamos que el que mejor predirá
-    es el modelo de Winter multiplicativo con un menor SSEp de 59743.29.
+    De manera resumida, en la \autoref{table:sse_p_summary} se adjunta la capacidad de predicción para los $3$ modelos estudiados, donde observamos que el modelo con menor error de prediccion para las $13$ próximas observaciones es el modelo de \emph{Winter Multiplicativo} cuyo valor $SSE_p = 59743.29$ es el menor de todos ellos..
 
     \begin{table}[htb!]
       \centering
-      \includegraphics[width=0.75\textwidth]{SSEP_D}
-      \caption{Predicciones SSEP. Seasonal Ad Mul}
-      \label{}
+      \includegraphics[width=\textwidth]{SSEP_D}
+      \caption{Suma de Cuadrados del Error de Predicción $k =13$ observaciones hacia delante para el modelo de \emph{Suavizado Exponencial con Estacionalidad}, modelo de \emph{Winter Aditivo} y modelo de \emph{Winter Multiplicativo}}
+      \label{table:sse_p_summary}
     \end{table}
 
     \paragraph{}
-    [TODO]
+    El código fuente utilizado para el cálculo de la suma de cuadrados del error de predicción $k$ pasos hacia adelante ($SSE_p$) se ha incluido en este documento. En concreto el \autoref{code:d_cross_validation} se refiere a la generación del conjunto de datos con el cual ajustar el modelo. Es decir, sin las observaciones que se van a predecir, para después comparar los resultados (esta estrategia de reserva de observaciones se conocer como \emph{Holdut}). El siguiente paso es el ajuste y predicción de las $k = 13$ observaciones siguientes para los modelos. Esto se hace en el \autoref{code:d_prediction_error_esm_seasonal}, \autoref{code:d_prediction_error_esm_winteradd}, y \autoref{code:d_prediction_error_esm_wintermul}. Finalmente, el cálculo de la \emph{Suma de Cuadrados del Error de Predicción} se lleva a cabo en el \autoref{code:d_summary_error}.
 
     \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/d-01-cross-validation.sas}
-      \caption{[TODO]}
+      \caption{Generación del conjunto de datos con el cual se ajustar el modelo.}
       \label{code:d_cross_validation}
     \end{listing}
-
-    \paragraph{}
-    [TODO]
 
     \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/d-02-prediction-error-esm-seasonal.sas}
-      \caption{[TODO]}
+      \caption{Ajuste del modelo de \emph{Suavizado Exponencial con Estacionalidad} y cálcula de las predicciones $k = 13$ pasos hacia delante.}
       \label{code:d_prediction_error_esm_seasonal}
     \end{listing}
-
-    \paragraph{}
-    [TODO]
 
     \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/d-02-prediction-error-esm-winteradd.sas}
-      \caption{[TODO]}
+      \caption{Ajuste del modelo de \emph{Winter Aditivo} y cálcula de las predicciones $k = 13$ pasos hacia delante.}
       \label{code:d_prediction_error_esm_winteradd}
     \end{listing}
-
-    \paragraph{}
-    [TODO]
 
     \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/d-02-prediction-error-esm-wintermul.sas}
-      \caption{[TODO]}
+      \caption{Ajuste del modelo de \emph{Winter Multiplicativo} y cálcula de las predicciones $k = 13$ pasos hacia delante.}
       \label{code:d_prediction_error_esm_wintermul}
     \end{listing}
-
-    \paragraph{}
-    [TODO]
 
     \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/d-03-error-summary.sas}
-      \caption{[TODO]}
+      \caption{Cálculo del la \emph{Suma de Cuadrados del Error de Predicción} $k = 13$ pasos hacia delante para todos los modelos ajustados.}
       \label{code:d_summary_error}
     \end{listing}
 
@@ -455,43 +435,40 @@
     [TODO]
 
     \paragraph{}
-    Esta primera tabla se ha obtenido de la misma manera que en el apartado anterior probando a variar  el  atributo NSSTART que finalmente se realizo para 2 obteniendo un SSEp de 62801.35 que es muy semejante al obtenido con \textit{proc esm}.
+    En la \autoref{table:sse_p_forecast_1} se muestra la suma de cuadrados del error de predicción obtenida de la misma manera que en el \autoref{sec:d}. Esto es fijando los mismos valores iniciales \texttt{ASTART} y \texttt{BSTART} referidos al término independiente y la pendiente respectivamente. En cuanto a los parámetros estacionales, se ha probado con distintos valores para el atributo \texttt{NSSTART} (número de observaciones para estimar los parámetros estaciones) comprobando que el que más se acerca es \texttt{NSSTART = 2}, obteniendo un $SSE_p = 62801.35$, muy semejante al obtenido con \textit{proc esm}. El
 
     \begin{table}[htb!]
       \centering
       \includegraphics[width=0.7\textwidth]{TablaSSEPFOR}
-      \caption{Predicciones SSEP Forecast. Multiplicativo}
-      \label{}
+      \caption{Cálculo de la \emph{Suma de Cuadrados del Error de Predicción ($SSE_p$)} $k = 13$ pasos hacia adelante por el método básico (1) con \texttt{proc forecast} para el modelo de \emph{Winter Multiplicativo}}
+      \label{table:sse_p_forecast_1}
     \end{table}
 
     \paragraph{}
-    Hay otra manera en la que no hace falta ir modificando el valor en NSStart.
+    En el \autoref{code:prediction_forecast_method_1} se incluyen las sentencias utilizadas para el cálculo de la suma de cuadrados de predicción $k = 13$ pasos hacia adelante con el \texttt{proc forecast}.
+
+    \begin{listing}[htb!]
+      \centering
+      \inputminted{SAS}{./res/code/e-prediction-forecast-method-1.sas}
+      \caption{Cálculo de la \emph{Suma de Cuadrados del Error de Predicción ($SSE_p$)} $k = 13$ pasos hacia adelante por el método básico (1) con \texttt{proc forecast} para el modelo de \emph{Winter Multiplicativo}}
+      \label{code:prediction_forecast_method_1}
+    \end{listing}
+
+    \paragraph{}
+    Paralelamente a la metodología indicada en el \autoref{code:prediction_forecast_method_1}, se puede seguir otra diferente para llegar a los mismos resultados que elimina la labor de probar diferentes valores para el parámetro \texttt{NSSTART}. Esta se incluye en el \autoref{code:prediction_forecast_method_2}. Los resultados que se obtienen siguiendo estrategia se muestran en la \autoref{table:sse_p_forecast_2}. Como vemos en la última fila, los resultados son equivalentes.
 
     \begin{table}[htb!]
       \centering
       \includegraphics[width=0.5\textwidth]{cabecera2}
       \includegraphics[width=0.5\textwidth]{SSEPFOR}
-      \caption{[TODO]}
-      \label{}
+      \caption{Cálculo de la \emph{Suma de Cuadrados del Error de Predicción ($SSE_p$)} $k = 13$ pasos hacia adelante por el método alternativo (2) con \texttt{proc forecast} para el modelo de \emph{Winter Multiplicativo}}
+      \label{table:sse_p_forecast_2}
     \end{table}
-
-    \paragraph{}
-    [TODO]
-
-    \begin{listing}[htb!]
-      \centering
-      \inputminted{SAS}{./res/code/e-prediction-forecast-method-1.sas}
-      \caption{Código Fuente para cálculo del error de predicción $SSE_p$ mediante el \texttt{proc forecast} por el primer método.}
-      \label{code:prediction_forecast_method_2}
-    \end{listing}
-
-    \paragraph{}
-    [TODO]
 
     \begin{listing}[htb!]
       \centering
       \inputminted{SAS}{./res/code/e-prediction-forecast-method-2.sas}
-      \caption{Código Fuente para cálculo del error de predicción $SSE_p$ mediante el \texttt{proc forecast} por el segundo método.}
+      \caption{Cálculo del error de predicción $SSE_p$ mediante el \texttt{proc forecast} por el método alternativo (2).}
       \label{code:prediction_forecast_method_2}
     \end{listing}
 
