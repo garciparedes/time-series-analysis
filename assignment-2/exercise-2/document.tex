@@ -136,18 +136,12 @@
 
     \subsection{Suavizado Exponencial con Estacionalidad}
 
-      \paragraph{}
-      [TODO]
-
       \begin{listing}[htb!]
         \centering
         \inputminted{SAS}{./res/code/b-01-esm-seasonal.sas}
         \caption{Código fuente para el ajuste de un modelo de \emph{Suavizado Exponencial con Estacionalidad} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
         \label{code:b_seasonal_esm}
       \end{listing}
-
-      \paragraph{}
-      [TODO]
 
       \paragraph{}
       Para comenzar explicaremos el modelo SES en el que mediante la tabla de los estimadores del parámetro y la significancia de dicho test.
@@ -190,18 +184,12 @@
 
     \subsection{Winter Aditivo}
 
-      \paragraph{}
-      [TODO]
-
       \begin{listing}[htb!]
         \centering
         \inputminted{SAS}{./res/code/b-01-esm-winteradd.sas}
         \caption{Ajuste de un modelo de \emph{Winter Aditivo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
         \label{code:b_winter_additive_esm}
       \end{listing}
-
-      \paragraph{}
-      [TODO]
 
       \begin{table}[htb!]
         \centering
@@ -238,18 +226,12 @@
 
     \subsection{Winter Multiplicativo}
 
-      \paragraph{}
-      [TODO]
-
       \begin{listing}[htb!]
         \centering
         \inputminted{SAS}{./res/code/b-01-esm-wintermul.sas}
         \caption{Ajuste de un modelo de \emph{Winter Multiplicativo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
         \label{code:b_winter_multiplicative_esm}
       \end{listing}
-
-      \paragraph{}
-      [TODO]
 
       \paragraph{}
       Para comenzar se adjunta la tabla de significancia, la cual se muestra en la \autoref{table:b_winter_multiplicative_significance}.
@@ -300,14 +282,8 @@
         \label{table:sse_comparative}
       \end{table}
 
-    \paragraph{}
-    [TODO ]
-
   \section{Elegir el modelo que se considere más apropiado entre los tres del \autoref{sec:b} y con ese modelo dar las predicciones para las próximas $6$ observaciones. Justificar la elección del modelo.}
   \label{sec:c}
-
-    \paragraph{}
-    [TODO]
 
     \begin{listing}[htb!]
       \centering
@@ -315,9 +291,6 @@
       \caption{Ajuste y predicción de las $5$ observaciones siguientes de un modelo de \emph{Winter Multiplicativo} sobre el conjunto de datos \texttt{EJ2.SEMANAL4}}
       \label{code:winter_multiplicative_prediction}
     \end{listing}
-
-    \paragraph{}
-    [TODO]
 
     \paragraph{}
     Tras realizar un exhaustivo análisis en el apartado b, de los 3 modelos de suavizado exponencial, hemos considerado que el mejor modelo es el multiplicativo de Winter.
@@ -339,14 +312,8 @@
       \label{table:predictions}
     \end{table}
 
-    \paragraph{}
-    [TODO]
-
   \section{Utilizando en el ajuste solamente los datos hasta el final de $1990$ que no incluyan ningún caso de $1991$, calcular los errores de predicción para el año $1991$ y su correspondiente $SSE_p$ (suma de $s$ errores al cuadrado correspondientes a predicciones $\{1, 2, ..., s\}$ pasos hacia adelante) para los tres modelos del \autoref{sec:b}. Comentar si la elección hecha en el apartado \autoref{sec:c} está de acuerdo con los resultados obtenidos en este caso al comparar la capacidad de predicción de los distintos modelos para el año $1991$. Adjuntad el programa con el lenguaje control que hayáis utilizado en este apartado.}
   \label{sec:d}
-
-    \paragraph{}
-    [TODO]
 
     \paragraph{}
     Para calcular el $SSE_p$, primero explicaremos resumidamente que és y en que basa. El $SSE_p$ es el cálculo de una medida para comparar la capacidad de predicción de un modelo de series temporales.
@@ -425,14 +392,8 @@
       \label{code:d_summary_error}
     \end{listing}
 
-    \paragraph{}
-    [TODO]
-
   \section{Obtener con el \texttt{proc forecast} de \emph{SAS} el $SSE_p$ para el modelo de \emph{Winter Multiplicativo} con las mismas constantes de suavizado y los valores iniciales de los parámetros lo más próximos posible a los obtenidos en el \autoref{sec:d} con el \texttt{proc esm} para este modelo. Adjuntar el programa con el lenguaje control que hayáis utilizado para obtenerlo.}
   \label{sec:e}
-
-    \paragraph{}
-    [TODO]
 
     \paragraph{}
     En la \autoref{table:sse_p_forecast_1} se muestra la suma de cuadrados del error de predicción obtenida de la misma manera que en el \autoref{sec:d}. Esto es fijando los mismos valores iniciales \texttt{ASTART} y \texttt{BSTART} referidos al término independiente y la pendiente respectivamente. En cuanto a los parámetros estacionales, se ha probado con distintos valores para el atributo \texttt{NSSTART} (número de observaciones para estimar los parámetros estaciones) comprobando que el que más se acerca es \texttt{NSSTART = 2}, obteniendo un $SSE_p = 62801.35$, muy semejante al obtenido con \textit{proc esm}. El
@@ -472,24 +433,79 @@
       \label{code:prediction_forecast_method_2}
     \end{listing}
 
-    \paragraph{}
-    [TODO]
-
   \section{Ajustar un modelo para la serie $\{ Xt \}$ con el módulo \texttt{Time Series Forecasting System} de \emph{SAS} razonando porqué se ha elegido. Utilizar el modelo elegido para predecir valores futuros de esta serie y establecer la comparación con los seis valores obtenidos en el \autoref{sec:c} junto con sus bandas de predicción.}
   \label{sec:f}
 
+
     \paragraph{}
-    [TODO]
+    Para decidir que modelo utilizar hemos comparado el multiplicativo con el modelo estacional, realizando el mismo proceso que en el \autoref{sec:c}. Los resultados no han sido concluyentes porque habia una similitud muy alta entre ambos. En el modelo estacional eran significativas la constante que suaviza el nivel y la que suaviza la componente estacional, y en el de Winter multiplicativo ocurria igual, y la que suaviza la tendencia no era significativa y por tanto no útil en el modelo. La unica minima diferencia es el $SSE$, que resultaba menor para el multiplicativo, siendo $417937.2$ frente a $417943.1$ del estacional.
+
+    \begin{figure}[htb!]
+      \centering
+      \includegraphics[width=\textwidth]{semanal-residuals}
+      \caption{Gráfico de la serie, gráfico de dispersión \emph{rango-media}, \emph{correlograma} y \emph{periodograma} de la serie generada por los residuales del modelo de \emph{Winter Multiplicativo} ajustado al conjunto de datos \texttt{EJ2.SEMANAL}}
+      \label{img:residuals_semanal}
+    \end{figure}
+
+    \paragraph{}
+    A continuación se adjunta la tabla de predicciones semanales para el modelo de \emph{Winter Multiplicativo}, obtenida con el siguiente código \texttt{SAS} del \autoref{code:f_export}.
+
+    \begin{listing}[htb!]
+      \centering
+      \inputminted{SAS}{./res/code/f-export.sas}
+      \caption{Conjunto de datos donde se almacenan los resultados del modelo de \emph{Winter Multiplicativo}}
+      \label{code:f_export}
+    \end{listing}
+
+    \paragraph{}
+    Los datos que se muestran en la \ref{table:pred_semanal} son meramente informativos. Lo interesante de los mismos es la suma de estas predicciones agrupadas en grupos de $4$ en cuatro. Esto permite para comprarlas con lo obtenido en el \autoref{sec:c} para la serie temporal de datos agrupados cada $4$ semanas. Esto se ha llevado a cabo mediante la ejecución del \autoref{code:f_comparison}.
+
+    \begin{table}[htb!]
+      \centering
+      \includegraphics[width=0.5\textwidth]{Tabla1PredFsemanal}
+      \includegraphics[width=0.5\textwidth]{Tabla2PredFsemanal}
+      \caption{Predicciones del modelo de \emph{Winter Multiplicativo} para la serie temporal referida a observaciones semanales.}
+      \label{table:pred_semanal}
+    \end{table}
+
+    \paragraph{}
+    A continuación se muestran la tabla que obtuvimos en el \autoref{sec:c} y en la recientemente obtenida sumando las predicciones semanales. Se puede observar como todas las predicciones obtenidas de la suma entran en la banda de prediccion de la serie cada $4$ semanas. Esto indica un buen ajuste de prediccion con este modelo.
+
+    \paragraph{}
+    Además, relizamos los mismos pasos parar el modelo estacional, y obtenemos que la primera predicción de la suma se sale de la banda de prediccion ($363.4203$), lo cual es otro argumento para seleccionar el modelo multiplicativo frente al estacional ya que este ajusta peor las predicciones.
+
+    \begin{table}[htb!]
+      \centering
+      \includegraphics[width=0.75\textwidth]{TablaSem4PredC}
+      \caption{Predicciones obtenidas por el modelo de \emph{Winter Multiplicativo}, agrupadas en $4$ conjuntos de semanas, para poder ser comparadas con los resultados del \autoref{sec:c}. Además, estas incluyen sus respectivas bandas de predicción.}
+      \label{table:pred_semanal_4}
+    \end{table}
+
+    \begin{table}[htb!]
+      \centering
+      \includegraphics[width=0.4\textwidth]{TablaSuma4SemanalPredF}
+      \caption{Predicciones agrupadas en Semanas de 4 para comparar con \autoref{sec:c}.}
+      \label{table:pred_grouped_semanal}
+    \end{table}
+
+    \begin{listing}[htb!]
+      \centering
+      \inputminted{SAS}{./res/code/f-comparison.sas}
+      \caption{Comparación de las predicciones obtenidas de manera semanal frente a las obtenidas por grupos de 4 semanas.}
+      \label{code:f_comparison}
+    \end{listing}
 
   \appendix
+  \renewcommand{\thesection}{(\Roman{section})}
+  \renewcommand\thesubsection{(\Roman{section}.\Roman{subsection})}
+
   \section{Código Fuente Auxiliar}
   \label{appendix:source_code}
 
     \subsection{Código Fuente \texttt{SAS}}
     \label{appendix:source_code_sas}
-      [TODO]
 
-      \begin{listing}[htb!]
+      \begin{listing}[H]
         \centering
         \inputminted{SAS}{./res/code/a-01-data.sas}
         \caption{Generación del conjunto de datos \texttt{EJ2.SEMANAL}}
@@ -499,12 +515,11 @@
 
     \subsection{Código Fuente \texttt{R}}
     \label{appendix:source_code_r}
-      [TODO]
 
-      \begin{listing}[htb!]
+      \begin{listing}[H]
         \centering
-        \inputminted{SAS}{./res/code/r/semanal.r}
-        \caption{[TODO]}
+        \inputminted{R}{./res/code/r/functions.r}
+        \caption{Generación de cojunto de gráficos (gráfico de la serie, gráfico \emph{rango-media}, \emph{correlograma} y \emph{periodograma}) para análisis descriptivo de las series \texttt{SEMANAL}, \texttt{SEMANAL4} y \texttt{SEMANALRESIDUOS}.}
         \label{code:semanal_analysis}
       \end{listing}
 
